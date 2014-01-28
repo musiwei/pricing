@@ -1,0 +1,1 @@
+http://devzone.zend.com/1651/managing-css-and-javascript-files-within-a-zend-framework-app/

@@ -1,0 +1,3 @@
+http://blog.vandenbos.org/2009/07/07/zend-framework-module-config/
+
+Warning: Minor change of code in this project. 
