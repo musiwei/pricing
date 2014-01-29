@@ -1,29 +1,85 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Zend Framework Default Application</title>
-</head>
-<body>
-  <h1>An error occurred</h1>
-  <h2><?php echo $this->message ?></h2>
+<body class="minimal error-page">
 
-  <?php if (isset($this->exception)): ?>
-  
-  <h3>Exception information:</h3>
-  <p>
-      <b>Message:</b> <?php echo $this->exception->getMessage() ?>
-  </p>
+    <!-- Start: Main -->
+    <div id="main">
+        <div class="container">
 
-  <h3>Stack trace:</h3>
-  <pre><?php echo $this->exception->getTraceAsString() ?>
-  </pre>
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="/" id="return-arrow"> <i
+                            class="fa fa-arrow-circle-left fa-3x text-red2"></i> <span> Return
+                            <br> to Homepage 
 
-  <h3>Request Parameters:</h3>
-  <pre><?php echo $this->escape(var_export($this->request->getParams(), true)) ?>
-  </pre>
+                        </span>
+                    </a>
+                    <!--  Siwei commented 20140129
+<div class="btn-group pull-right margin-lg">
+<button type="button" class="btn btn-default btn-gradient dropdown-toggle" data-toggle="dropdown">Example Icons <span class="glyphicons glyphicons-cogwheel"></span></button>
+<ul class="dropdown-menu icon-option-menu checkbox-persist pull-right text-left" role="menu">
+<li><a><i class="imoon imoon-road"></i> Road</a></li>
+<li><a><i class="imoon imoon-bell"></i> Bell</a></li>
+<li><a><i class="imoon imoon-shield"></i> Shield</a></li>
+<li><a><i class="imoon imoon-switch"></i> Switch</a></li>
+<li><a><i class="imoon imoon-accessibility"></i> Person</a></li>
+</ul>
+</div>
+                    -->
+                </div>
+            </div>
 
-  <?php endif ?>
+            <div id="error-container" class="row">
+                <div class="col-md-10 col-lg-7 center-column text-center">
+                    <?php if($this->responseCode == '404'):?>
+                    <span class="error-text fadeIn animated">4</span>
+                    <div class="error-icon inline-object">
+                        <span class="fadeIn animated imoon imoon-spinner5"></span>
+                    </div>
+                    <span class="error-text fadeIn animated">4</span>
+                    <p class="lead top-lg text-center fadeIn animated">Oh no! We're
+                        sorry but we can't find the page you are looking for.</p>
+                    <?php else:?>
+                    <span class="error-text fadeIn animated">5</span>
+                    <div class="error-icon inline-object">
+                        <span class="fadeIn animated imoon imoon-shield"></span>
+                    </div>
+                    <span class="error-text fadeIn animated">0</span>
+                    <p class="lead top-lg text-center fadeIn animated">Uh Oh! Don't
+                        worry we have a team hard at working solving the problem!</p>
+                    <?php endif;?>
 
+
+
+                    <!-- Start: Error output -->
+                    <div>
+                        <h1>An error occurred</h1>
+
+                        <h3>Exception information:</h3>
+                        <p>
+                            <b>Message:</b> <?= $this->message?>
+                        </p>
+
+                        <h3>Stack trace:</h3>
+                        <pre><?= $this->stacktrace?></pre>
+
+                        <h3>Request Parameters:</h3>
+                        <pre><?= $this->parameters?></pre>
+                    </div>
+                    <!-- End: Error output-->
+
+                    <!--  Siwei commented 20140129
+                    <div id="search-widget" class="fadeIn animated">
+                            <form class="search-widget" role="search">
+                                    <input type="text" class="search-bar-widget form-control"
+                                            placeholder="Hi there, do have a question? Enter a search term here.">
+                                    <i class="fa fa-search search-widget-icon"></i>
+                                    <button type="submit" class="btn btn-red" value="search">Search</button>
+                            </form>
+                    -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End: Main -->
 </body>
-</html>
