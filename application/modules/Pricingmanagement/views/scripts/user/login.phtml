@@ -1,0 +1,63 @@
+<a href="../" id="return-arrow"> <i
+	class="fa fa-arrow-circle-left fa-3x text-red2"></i> <span><?= $this->translate('Return <br> to Homepage')?>
+	</span>
+</a>
+
+<!-- Start: Main -->
+<div id="main">
+	<div class="container">
+		<div class="row">
+			<div id="page-logo">
+				<img src="/skin/default/theme_stardom/img/logos/logo-red.png"
+					class="img-responsive" alt="logo">
+			</div>
+		</div>
+		<div class="row">
+			<div class="panel">
+				<div class="panel-heading">
+					<div class="panel-title">
+						<i class="fa fa-lock"></i> <?= $this->translate('Login')?>
+						</div>
+					<span class="panel-title-sm pull-right padding-right-sm"><?= $this->translate('Not a member?')?> </span>
+				</div>
+				<form class="cmxform" id="altForm" method="get">
+					<div class="panel-body">
+						<div class="login-avatar">
+							<img src="/skin/default/theme_stardom/img/avatars/login.png"
+								width="150" height="112" alt="avatar">
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-user"></i> </span>
+								<input type="text" class="form-control phone" maxlength="10"
+									autocomplete="off"
+									placeholder="<?= $this->translate('User Name')?>">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<span class="input-group-addon"><i class="fa fa-key"></i> </span>
+								<input type="text" class="form-control product" maxlength="10"
+									autocomplete="off"
+									placeholder="<?= $this->translate('Password')?>">
+							</div>
+						</div>
+						<div class="alert alert-warning login-alert">
+							    <?= $this->translate('Please read our <b>Terms of Use</b> before logging in.')?>
+							</div>
+					</div>
+					<div class="panel-footer">
+						<span class="panel-title-sm pull-left" style="padding-top: 7px;"><a>
+									<?= $this->translate('Forgotten Password?')?></a></span>
+						<div class="form-group margin-bottom-none">
+							<input class="btn btn-primary pull-right" type="submit"
+								value="<?= $this->translate('Login')?>" />
+							<div class="clearfix"></div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- End: Main -->

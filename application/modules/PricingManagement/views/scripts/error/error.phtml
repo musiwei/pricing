@@ -1,18 +1,14 @@
-<body class="minimal error-page">
+<!-- Start: Main -->
+	<div id="main">
+		<div class="container">
 
-    <!-- Start: Main -->
-    <div id="main">
-        <div class="container">
-
-            <div class="row">
-                <div class="col-md-12">
-                    <a href="/" id="return-arrow"> <i
-                            class="fa fa-arrow-circle-left fa-3x text-red2"></i> <span> Return
-                            <br> to Homepage 
-
-                        </span>
-                    </a>
-                    <!--  Siwei commented 20140129
+			<div class="row">
+				<div class="col-md-12">
+					<a href="../" id="return-arrow"> <i
+						class="fa fa-arrow-circle-left fa-3x text-red2"></i> <span><?= $this->translate('Return <br> to Homepage')?>
+					</span>
+					</a>
+					<!--  Siwei commented 20140129
 <div class="btn-group pull-right margin-lg">
 <button type="button" class="btn btn-default btn-gradient dropdown-toggle" data-toggle="dropdown">Example Icons <span class="glyphicons glyphicons-cogwheel"></span></button>
 <ul class="dropdown-menu icon-option-menu checkbox-persist pull-right text-left" role="menu">
@@ -24,49 +20,48 @@
 </ul>
 </div>
                     -->
-                </div>
-            </div>
+				</div>
+			</div>
 
-            <div id="error-container" class="row">
-                <div class="col-md-10 col-lg-7 center-column text-center">
+			<div id="error-container" class="row">
+				<div class="col-md-10 col-lg-7 center-column text-center">
                     <?php if($this->responseCode == '404'):?>
                     <span class="error-text fadeIn animated">4</span>
-                    <div class="error-icon inline-object">
-                        <span class="fadeIn animated imoon imoon-spinner5"></span>
-                    </div>
-                    <span class="error-text fadeIn animated">4</span>
-                    <p class="lead top-lg text-center fadeIn animated">Oh no! We're
-                        sorry but we can't find the page you are looking for.</p>
+					<div class="error-icon inline-object">
+						<span class="fadeIn animated imoon imoon-spinner5"></span>
+					</div>
+					<span class="error-text fadeIn animated">4</span>
+					<p class="lead top-lg text-center fadeIn animated"><?= $this->translate("Oh no! We're sorry but we can't find the page you are looking for.")?></p>
                     <?php else:?>
                     <span class="error-text fadeIn animated">5</span>
-                    <div class="error-icon inline-object">
-                        <span class="fadeIn animated imoon imoon-shield"></span>
-                    </div>
-                    <span class="error-text fadeIn animated">0</span>
-                    <p class="lead top-lg text-center fadeIn animated">Uh Oh! Don't
-                        worry we have a team hard at working solving the problem!</p>
+					<div class="error-icon inline-object">
+						<span class="fadeIn animated imoon imoon-shield"></span>
+					</div>
+					<span class="error-text fadeIn animated">0</span>
+					<p class="lead top-lg text-center fadeIn animated"><?= $this->translate("Uh Oh! Don't worry we have a team hard at working solving the problem!")?></p>
                     <?php endif;?>
 
-
-
                     <!-- Start: Error output -->
-                    <div>
-                        <h1>An error occurred</h1>
+					<div>
+						<h1><?= $this->translate('An error occurred')?></h1>
 
-                        <h3>Exception information:</h3>
-                        <p>
-                            <b>Message:</b> <?= $this->message?>
+						<?php if (isset($this->exception)): ?>
+						<h3><?= $this->translate('Exception information:')?></h3>
+						<p>
+							<b><?= $this->translate('Message:')?></b> <?php echo $this->exception->getMessage() ?>
                         </p>
 
-                        <h3>Stack trace:</h3>
-                        <pre><?= $this->stacktrace?></pre>
+						<h3><?= $this->translate('Stack trace:')?></h3>
+						<pre><?php echo $this->exception->getTraceAsString() ?></pre>
 
-                        <h3>Request Parameters:</h3>
-                        <pre><?= $this->parameters?></pre>
-                    </div>
-                    <!-- End: Error output-->
+						<h3><?= $this->translate('Request Parameters:')?></h3>
+						<pre><?php echo $this->parameters ?></pre>
+						<?php endif ?>
+						
+					</div>
+					<!-- End: Error output-->
 
-                    <!--  Siwei commented 20140129
+					<!--  Siwei commented 20140129
                     <div id="search-widget" class="fadeIn animated">
                             <form class="search-widget" role="search">
                                     <input type="text" class="search-bar-widget form-control"
@@ -74,12 +69,10 @@
                                     <i class="fa fa-search search-widget-icon"></i>
                                     <button type="submit" class="btn btn-red" value="search">Search</button>
                             </form>
-                    -->
-
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+                -->
+				</div>
+			</div>
+		</div>
+	</div>
 <!-- End: Main -->
-</body>

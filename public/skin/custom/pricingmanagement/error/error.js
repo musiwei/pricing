@@ -3,6 +3,9 @@
 	// Init Theme Core 	  
 	Core.init();
 	
+	// add class to body tag
+	$( "body" ).addClass( "minimal error-page" );
+	
 	$('.icon-option-menu li a').click(function () {
 		iconName = $(this).children('i').attr('class');	
 		

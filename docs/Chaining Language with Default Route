@@ -1,0 +1,13 @@
+This is the routing strategy of this project. 
+
+e.g. www.example.com/en/user/login
+[en]: language
+[user]: controller
+[login]: action
+
+http://devzone.zend.com/1765/chaining-language-with-default-route/
+This is a detail tutorial. Minor change of code and finally got it worked.
+
+Chaining routes in Zend Framework
+http://robertbasic.com/blog/chaining-routes-in-zend-framework
+This is another shorter example but which worked perfectly

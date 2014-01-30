@@ -1,5 +1,5 @@
 <?php
-require_once '../../../../../application/modules/PricingManagement/controllers/UserController.php';
+require_once '../../../../../application/modules/Pricingmanagement/controllers/UserController.php';
 
 require_once 'Zend/Test/PHPUnit/ControllerTestCase.php';
 

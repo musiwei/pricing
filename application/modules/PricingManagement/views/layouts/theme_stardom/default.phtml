@@ -9,37 +9,50 @@
 <meta name="author" content="Siwei">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+
 <!-- Start: Load core css -->
-<?php echo $this->render('/blocks/css.phtml') ?>
+<?php echo $this->render('/resources/css.phtml') ?>
 <!-- End: Load core css -->
+
 
 <!-- Start: Load custom css -->
 <?php echo $this->cssHelper() ?> 
 <!-- End: Load custom css -->
 
+
 <!-- Start: Load core icon -->
-<?php echo $this->render('/blocks/icon.phtml') ?>
+<?php echo $this->render('/resources/icon.phtml') ?>
 <!-- End: Load core icon -->
+
 
 <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
   <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
 <![endif]-->
-
 </head>
- 
+
+<body>
+
+<!-- Start: Page header -->
+<?php echo $this->render('/blocks/header.phtml') ?>
+<!-- End: Page header -->
+
+
 <!-- Start: Load Content -->
 <?php echo $this->layout()->content ?>
 <!-- End: Load Content -->
 
+
 <!-- Start: Load core javascript -->
-<?php echo $this->render('/blocks/javascript.phtml') ?>
+<?php echo $this->render('/resources/javascript.phtml') ?>
 <!-- End: Load core javascript -->
+
 
 <!-- Start: Load custom javascript -->
 <?php echo $this->javascriptHelper() ?> 
 <!-- End: Load custom javascript -->
 
+</body>
 
 </html>

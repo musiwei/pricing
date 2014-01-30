@@ -12,4 +12,7 @@ class Pricingmanagement_View_Helper_CssHelper extends Zend_View_Helper_Abstract
         return $this->view->headLink(); 
          
     } 
+    function abc(){
+    	echo 1;
+    }
 }

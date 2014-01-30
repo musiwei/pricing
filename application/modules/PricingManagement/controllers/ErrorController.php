@@ -48,9 +48,6 @@ class Pricingmanagement_ErrorController extends Zend_Controller_Action
             $this->view->exception = $errors->exception;
         }
         
-        $this->view->request   = $errors->request;
-        $this->view->message = $errors->exception->getMessage();
-        $this->view->stacktrace = $errors->exception->getTraceAsString();
         $this->view->parameters = var_export($errors->request->getParams(), true);
     }
 

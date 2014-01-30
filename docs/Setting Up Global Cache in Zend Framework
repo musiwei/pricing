@@ -1,0 +1,5 @@
+http://www.stoimen.com/blog/2010/07/21/setting-up-global-cache-in-zend-framework/
+
+To test your cache: http://stackoverflow.com/questions/6263696/zend-how-to-use-cache-component
+
+Also need to modify module bootstrap to introduce the namespace in library, as well as register plugin
