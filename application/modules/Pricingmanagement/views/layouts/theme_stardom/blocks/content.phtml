@@ -1,0 +1,17 @@
+<section id="<?= $this->placeholder('sectionId');?>">
+
+    <?php if ($this->placeholder('hasBreadcrumb') != '0'):?>
+    <!-- Start: Breadcrumb -->
+	<div id="topbar">
+		<ol class="breadcrumb">
+        <?= $this->navigation()->breadcrumbs()->setLinkLast(false)->setMinDepth(0)->setPartial('partials/breadcrumb.phtml'); ?>
+        </ol>
+	</div>
+	<!-- End: Breadcrumb -->
+    <?php endif ?>
+	
+	<!-- Start: Content -->
+    <?= $this->layout()->content?>
+    <!-- Start: Content -->
+    
+</section>

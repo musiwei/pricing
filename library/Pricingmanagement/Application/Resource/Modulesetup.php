@@ -1,4 +1,12 @@
 <?php
+
+/**
+ * @author Siwei Mu (musiwei.work@gmail.com)
+ * @copyright Newton's Nerds
+ * @since 02 Feb 2014
+ * @version 1.0
+ */
+
 class Pricing_Application_Resource_Modulesetup
 extends Zend_Application_Resource_ResourceAbstract
 {
@@ -82,8 +90,7 @@ extends Zend_Application_Resource_ResourceAbstract
 					->getEnvironment());
 					break;
 				case 'xml':
-					$cfg = new Zend_Config_Xml($fullpath, $this->getBootstrap()
-					->getEnvironment());
+					$cfg = new Zend_Config_Xml($fullpath);
 					break;
 				default:
 					throw new Zend_Config_Exception('Invalid format for config file');

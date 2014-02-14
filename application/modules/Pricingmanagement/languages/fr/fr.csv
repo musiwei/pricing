@@ -2,5 +2,8 @@ hello,bonjour
 User Name,Nom D'utilisateur
 Password,Mot De Passe
 Login,Connexion
-Return,Retour
-to Homepage,¨¤ la page d'accueil
+Return <br> to Homepage,Retour <br> à l'accueil
+"Terms of Use","Conditions d'utilisation"
+"Please read our <b>Terms of Use</b> before logging in.","S'il vous plaît lire nos Conditions d'utilisation <b> </ b> avant de vous connecter"
+"Not a member?","Pas encore membre?"
+"Forgotten Password?","Mot de passe oublié?"

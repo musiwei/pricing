@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @author Siwei Mu (musiwei.work@gmail.com)
+ * @copyright Newton's Nerds
+ * @since 02 Feb 2014
+ * @version 1.0
+ */
+
 class Pricingmanagement_IndexController extends Zend_Controller_Action
 {
 
@@ -8,6 +15,7 @@ class Pricingmanagement_IndexController extends Zend_Controller_Action
 
     public function indexAction ()
     {
+        
         $result1 = '';
         $cache = Zend_Registry::get('cache');
         
@@ -24,6 +32,11 @@ class Pricingmanagement_IndexController extends Zend_Controller_Action
             
             Zend_Debug::dump($cache->load('mydata'));
         }
+        
+        $this->_helper->LayoutInit('My Account',
+        		array(
+        				'sectionId' => 'content'
+        		));
     }
 }
 

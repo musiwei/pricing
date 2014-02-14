@@ -1,27 +1,29 @@
-<?php echo $this->doctype() ?>
+<?= $this->doctype() ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <!-- Meta, title, CSS, favicons, etc. -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<?php echo $this->headTitle() ?>
-<meta name="keywords" content="HTML5 Bootstrap 3 Admin Template UI Theme" />
-<meta name="description" content="Stardom - A Responsive HTML5 Admin UI Template Theme">
-<meta name="author" content="Siwei">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<?= $this->partial('partials/meta.phtml', array(
+    'ContentType' => 'text/html; charset=iso-8859-1',
+    'keywords' => 'HTML5 Bootstrap 3 Admin Template UI Theme',
+    'description' => 'Stardom - A Responsive HTML5 Admin UI Template Theme',
+    'author' => 'Siwei Mu',
+    'viewport' => 'width=device-width, initial-scale=1.0'
+        )) ?>
 
+<?= $this->headTitle() ?>
 
 <!-- Start: Load core css -->
-<?php echo $this->render('/resources/css.phtml') ?>
+<?= $this->render('/resources/css.phtml') ?>
 <!-- End: Load core css -->
 
 
 <!-- Start: Load custom css -->
-<?php echo $this->cssHelper() ?> 
+<?= $this->cssHelper() ?> 
 <!-- End: Load custom css -->
 
 
 <!-- Start: Load core icon -->
-<?php echo $this->render('/resources/icon.phtml') ?>
+<?= $this->render('/resources/icon.phtml') ?>
 <!-- End: Load core icon -->
 
 
@@ -32,25 +34,49 @@
 <![endif]-->
 </head>
 
-<body>
+<body class="<?= $this->placeholder('bodyClass');?>">
 
 <!-- Start: Page header -->
-<?php echo $this->render('/blocks/header.phtml') ?>
+<?php if ($this->placeholder('hasHeader') != '0'):?>
+<?= $this->render('/blocks/header.phtml') ?>
+<?php endif ?>
 <!-- End: Page header -->
 
+<div id="main">
 
-<!-- Start: Load Content -->
-<?php echo $this->layout()->content ?>
-<!-- End: Load Content -->
+<!-- Start: Sidebar -->
+<?php if ($this->placeholder('hasSidebar') != '0'):?>
+<?= $this->render('/blocks/sidebar.phtml') ?>
+<?php endif ?>
+<!-- End: Page header -->
 
+<!-- Start: Breadcrumb and Content -->
+<?php if ($this->placeholder('hasContent') != '0'):?>
+<?= $this->render('/blocks/content.phtml') ?>
+<?php endif ?>
+<!-- End: Breadcrumb and Content -->
+
+</div>
+
+<!-- Begin: Front Page Loading Animation --> 
+<div id="page-loader"><span class="glyphicon glyphicon-cog fa-spin cog-1"></span></div>
+<!-- End: Front Page Loading Animation --> 
 
 <!-- Start: Load core javascript -->
-<?php echo $this->render('/resources/javascript.phtml') ?>
+<?= $this->render('/resources/javascript.phtml') ?>
 <!-- End: Load core javascript -->
 
+<script>
+jQuery(document).ready(function() {
+
+	// Init Theme Core 	  
+	Core.init();   
+	
+});
+</script>
 
 <!-- Start: Load custom javascript -->
-<?php echo $this->javascriptHelper() ?> 
+<?= $this->javascriptHelper() ?> 
 <!-- End: Load custom javascript -->
 
 </body>

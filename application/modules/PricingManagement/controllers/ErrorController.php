@@ -1,15 +1,24 @@
 <?php
 
+/**
+ * @author Siwei Mu (musiwei.work@gmail.com)
+ * @copyright Newton's Nerds
+ * @since 02 Feb 2014
+ * @version 1.0
+ */
+
 class Pricingmanagement_ErrorController extends Zend_Controller_Action
 {
 
     public function init()
     {
-        $this->_helper->layout->setLayout('default');
+
     }
+    
     
     public function errorAction()
     {
+        
         $errors = $this->_getParam('error_handler');
         
         if (!$errors || !$errors instanceof ArrayObject) {
@@ -26,21 +35,32 @@ class Pricingmanagement_ErrorController extends Zend_Controller_Action
                 $priority = Zend_Log::NOTICE;
                 $this->view->responseCode = $this->getResponse()->getHttpResponseCode();
                 $this->view->message = 'Page not found';
-                $this->view->headTitle('Woops! Page not found')->setSeparator(' - ');
+                $this->_helper->LayoutInit('Woops! Page not found',
+                		array(
+                				'bodyClass'     => 'minimal error-page',
+                				'hasHeader'     => '0',
+                				'hasSidebar'    => '0',
+                		        'hasBreadcrumb' => '0'
+                		));
                 break;
             default:
                 // application error
                 $this->getResponse()->setHttpResponseCode(500);
                 $priority = Zend_Log::CRIT;
                 $this->view->message = 'Application error';
-                $this->view->headTitle('Woops! Internal error')->setSeparator(' - ');
+                $this->_helper->LayoutInit('Woops! Application error',
+                		array(
+                				'bodyClass'     => 'minimal error-page',
+                				'hasHeader'     => '0',
+                				'hasSidebar'    => '0',
+                		        'hasBreadcrumb' => '0'
+                		));
                 break;
         }
         
         // Log exception, if logger available
-        if ($log = $this->getLog()) {
-            $log->log($this->view->message, $priority, $errors->exception);
-            $log->log('Request Parameters', $priority, $errors->request->getParams());
+        if ($log = $this->getRequest()->_logger) {
+            $log->crit($this->view->message . ': ' . $errors->exception, $errors->exception);
         }
         
         // conditionally display exceptions
@@ -49,16 +69,6 @@ class Pricingmanagement_ErrorController extends Zend_Controller_Action
         }
         
         $this->view->parameters = var_export($errors->request->getParams(), true);
-    }
-
-    public function getLog()
-    {
-        $bootstrap = $this->getInvokeArg('bootstrap');
-        if (!$bootstrap->hasResource('Log')) {
-            return false;
-        }
-        $log = $bootstrap->getResource('Log');
-        return $log;
     }
 
 

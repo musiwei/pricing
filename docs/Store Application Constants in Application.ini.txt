@@ -1,0 +1,1 @@
+http://stackoverflow.com/questions/4500230/where-to-store-application-constants-in-zend

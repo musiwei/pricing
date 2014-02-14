@@ -1,8 +1,17 @@
 <?php
 
+/**
+ * @author Siwei Mu (musiwei.work@gmail.com)
+ * @copyright Newton's Nerds
+ * @since 02 Feb 2014
+ * @version 1.0
+ */
+
 class Pricingmanagement_Bootstrap extends Zend_Application_Module_Bootstrap
 {
 
+    
+    
     protected function _initAutoload ()
     {
         
@@ -15,6 +24,25 @@ class Pricingmanagement_Bootstrap extends Zend_Application_Module_Bootstrap
         $autoloader->registerNamespace('Pricingmanagement_');
         $autoloader->suppressNotFoundWarnings(true);
     }
+    
+    protected function _initPaths()
+    {
+    	$registry = Zend_Registry::getInstance();
+    	$registry->path = new Zend_Config( $this->getApplication()->getOption('path') );
+    }
+    
+    protected function _initNavigation()
+    {
+    	$this->bootstrap('layout');
+    	$layout = $this->getResource('layout');
+    	$view = $layout->getView();
+    	
+    	$config = new Zend_Config_Xml(Zend_Registry::getInstance()->path->modulePath . 'configs/navigation.xml');
+    	
+    	$navigation = new Zend_Navigation($config);
+    	$view->navigation($navigation);
+    }
+    
 
     protected function _initCacheFrontControllerPlugins ()
     {
@@ -24,66 +52,7 @@ class Pricingmanagement_Bootstrap extends Zend_Application_Module_Bootstrap
                 new Pricingmanagement_Controller_Plugin_CacheInit());
     }
     
-    protected function _initTranslate()
-    {
-        
-        $this->bootstrap('frontController');
-        $frontController = $this->getResource('frontController');
-        $router = $frontController->getRouter(); // router is a singleton 
-        $request =  new Zend_Controller_Request_Http(); 
-        $router->route($request); 
 
-        $moduleName = $request->getModuleName(); 
-        
-        // Fetch translate configuration
-        $conf = $this->getOption('resources');
-        
-        $translateAdapter = $conf['translate']['adapter'];
-        $translatePath = $conf['translate']['data'];
-        $translateDelimiter = $conf['translate']['options']['delimiter'];
-        
-        // Automatically install all the language files 
-    	$translate = new Zend_Translate($translateAdapter,
-    			$translatePath,
-    			null,
-    			array('scan' => Zend_Translate::LOCALE_DIRECTORY, 'delimiter' => $translateDelimiter));
-    	
-    	$registry = Zend_Registry::getInstance();
-    	$registry->set('Zend_Translate', $translate);
-    	$translate->setLocale('en');
-    }
 
-    protected function _initRoutes ()
-    {
-        
-        // Now get router from front controller
-        $this->bootstrap('frontController');
-        $front = $this->getResource('frontController');
-        $router = $front->getRouter();
-        
-        // Create route with language id (lang)
-        $routeLang = new Zend_Controller_Router_Route(
-                ':lang', 
-                array(
-                        'lang' => 'en'
-                ), 
-                array(
-                        'lang' => '[a-z]{2}'
-                ));
-        
-        // Instantiate default module route
-        $routeDefault = new Zend_Controller_Router_Route_Module(array(), 
-                $front->getDispatcher(), $front->getRequest());
-        
-        // Chain it with language route
-        $routeLangDefault = $routeLang->chain($routeDefault);
-        
-        // Add both language route chained with default route and
-        // plain language route
-        $router->addRoute('default', $routeLangDefault);
-        $router->addRoute('lang', $routeLang);
-        
-        // Register plugin to handle language changes
-        $front->registerPlugin(new Pricingmanagement_Controller_Plugin_Getlocale());
-    }
+    
 }

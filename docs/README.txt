@@ -3,6 +3,11 @@ README
 
 This directory contains all the technics implemented in this project. 
 
+Debug Tool
+==========
+
+echo "<pre>"; print_r($front->getRequest()); echo "</pre>";
+
 
 Setting Up Your VHOST
 =====================

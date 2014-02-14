@@ -1,5 +1,12 @@
 <?php
 
+/**
+ * @author Siwei Mu (musiwei.work@gmail.com)
+ * @copyright Newton's Nerds
+ * @since 02 Feb 2014
+ * @version 1.0
+ */
+
 class Pricingmanagement_Controller_Plugin_CacheInit extends Zend_Controller_Plugin_Abstract
 {
 

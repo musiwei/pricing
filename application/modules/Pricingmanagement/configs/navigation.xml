@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configdata>
+	<nav>
+		<label>Home</label>
+		<controller>index</controller>
+		<action>index</action>
+		<pages>
+			<user>
+				<label>My Account</label>
+				<controller>user</controller>
+				<action>index</action>
+				<pages>
+					<login>
+						<label>Login</label>
+						<controller>user</controller>
+						<action>login</action>
+					</login>
+					<logout>
+						<label>Logout</label>
+						<controller>user</controller>
+						<action>logout</action>
+					</logout>
+					<allopenorders>
+						<label>All Open Orders</label>
+						<controller>user</controller>
+						<action>index</action>
+						<params>
+							<queryname>allopenorders</queryname>
+						</params>
+					</allopenorders>
+				</pages>
+			</user>
+
+			<reports>
+				<label>Reports</label>
+				<controller>report</controller>
+				<action>index</action>
+				<pages>
+					<country>
+						<label>Country</label>
+						<controller>report</controller>
+						<action>country</action>
+					</country>
+					<countryrevenue>
+						<label>Country Revenue</label>
+						<controller>report</controller>
+						<action>countryrevenue</action>
+					</countryrevenue>
+				</pages>
+			</reports>
+		</pages>
+	</nav>
+</configdata>

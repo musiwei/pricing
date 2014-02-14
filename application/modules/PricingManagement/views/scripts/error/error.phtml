@@ -5,7 +5,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<a href="../" id="return-arrow"> <i
-						class="fa fa-arrow-circle-left fa-3x text-red2"></i> <span><?= $this->translate('Return <br> to Homepage')?>
+						class="fa fa-arrow-circle-left fa-3x text-red2"></i> <span><?= $this->T('Return <br> to Homepage')?>
 					</span>
 					</a>
 					<!--  Siwei commented 20140129
@@ -31,30 +31,30 @@
 						<span class="fadeIn animated imoon imoon-spinner5"></span>
 					</div>
 					<span class="error-text fadeIn animated">4</span>
-					<p class="lead top-lg text-center fadeIn animated"><?= $this->translate("Oh no! We're sorry but we can't find the page you are looking for.")?></p>
+					<p class="lead top-lg text-center fadeIn animated"><?= $this->T("Oh no! We're sorry but we can't find the page you are looking for.")?></p>
                     <?php else:?>
                     <span class="error-text fadeIn animated">5</span>
 					<div class="error-icon inline-object">
 						<span class="fadeIn animated imoon imoon-shield"></span>
 					</div>
 					<span class="error-text fadeIn animated">0</span>
-					<p class="lead top-lg text-center fadeIn animated"><?= $this->translate("Uh Oh! Don't worry we have a team hard at working solving the problem!")?></p>
+					<p class="lead top-lg text-center fadeIn animated"><?= $this->T("Uh Oh! Don't worry we have a team hard at working solving the problem!")?></p>
                     <?php endif;?>
 
                     <!-- Start: Error output -->
 					<div>
-						<h1><?= $this->translate('An error occurred')?></h1>
+						<h1><?= $this->T('An error occurred')?></h1>
 
 						<?php if (isset($this->exception)): ?>
-						<h3><?= $this->translate('Exception information:')?></h3>
+						<h3><?= $this->T('Exception information:')?></h3>
 						<p>
-							<b><?= $this->translate('Message:')?></b> <?php echo $this->exception->getMessage() ?>
+							<b><?= $this->T('Message:')?></b> <?php echo $this->exception->getMessage() ?>
                         </p>
 
-						<h3><?= $this->translate('Stack trace:')?></h3>
+						<h3><?= $this->T('Stack trace:')?></h3>
 						<pre><?php echo $this->exception->getTraceAsString() ?></pre>
 
-						<h3><?= $this->translate('Request Parameters:')?></h3>
+						<h3><?= $this->T('Request Parameters:')?></h3>
 						<pre><?php echo $this->parameters ?></pre>
 						<?php endif ?>
 						
