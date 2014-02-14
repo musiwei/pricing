@@ -25,7 +25,7 @@ class Pricingmanagement_UserController extends Zend_Controller_Action
                         'controller' => 'index'
                 ),
                 array(
-                        'label' => 'Page 2',
+                        'label' => 'Account',
                         'controller' => 'user',
                         'pages' => array(
                                 array(
@@ -49,13 +49,6 @@ class Pricingmanagement_UserController extends Zend_Controller_Action
         
         $this->view->zendNavigationContainer = new Zend_Navigation($array);
         
-        $userGateway = new Pricingmanagement_Model_UserGateway();
-        $row = $userGateway->fetchUserById(1);
-        
-        // $this->view->user = $users->current()->username;
-        
-        $this->view->user = $row->last_name;
-        
         $this->_helper->LayoutInit('My Account', 
                 array(
                         'sectionId' => 'content'
@@ -66,7 +59,7 @@ class Pricingmanagement_UserController extends Zend_Controller_Action
 
     public function loginAction ()
     {
-        // Title and other options
+        # Title and other options
         $this->_helper->LayoutInit('Login', 
                 array(
                         'bodyClass' => 'login-page',
@@ -76,10 +69,15 @@ class Pricingmanagement_UserController extends Zend_Controller_Action
                 ));
         
         $Users = $this->_helper->DoctrineInit->getRepository('\Application\Entity\User')->findAll();
-        Zend_Registry::get('logger')->log('This is a log message!', 3);
         $this->view->users = $Users;
-        foreach($Users as $user)
-            echo $user->getId();
+    }
+    
+    private function samples(){
         
+    	# To use logger globally
+        //Zend_Registry::get('logger')->log('This is a log message!', 3);
+        
+        # To use flash messenger globally
+        // $this->_helper->FlashMessenger->addMessage('Record Saved!');
     }
 }

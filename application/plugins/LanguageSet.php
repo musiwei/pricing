@@ -7,7 +7,7 @@
  * @version 1.0
  */
 
-class Pricingmanagement_Controller_Plugin_Getlocale extends Zend_Controller_Plugin_Abstract
+class Application_Plugin_LanguageSet extends Zend_Controller_Plugin_Abstract
 {
 
     /**

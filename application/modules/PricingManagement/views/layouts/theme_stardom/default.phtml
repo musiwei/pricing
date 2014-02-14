@@ -50,6 +50,10 @@
 <?php endif ?>
 <!-- End: Page header -->
 
+<!-- Start: Flash messenger -->
+<?= !empty($this->alert) ? '<div class="error">' . implode('<br />', $this->alert) .'</div>' : null ?>
+<!-- End: Flash messenger -->
+
 <!-- Start: Breadcrumb and Content -->
 <?php if ($this->placeholder('hasContent') != '0'):?>
 <?= $this->render('/blocks/content.phtml') ?>

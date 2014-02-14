@@ -42,17 +42,4 @@ class Pricingmanagement_Bootstrap extends Zend_Application_Module_Bootstrap
     	$navigation = new Zend_Navigation($config);
     	$view->navigation($navigation);
     }
-    
-
-    protected function _initCacheFrontControllerPlugins ()
-    {
-        
-        $frontController = Zend_Controller_Front::getInstance();
-        $frontController->registerPlugin(
-                new Pricingmanagement_Controller_Plugin_CacheInit());
-    }
-    
-
-
-    
 }
