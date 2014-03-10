@@ -9,7 +9,6 @@
  * updates much easier to apply.
 -----------------------------------------------*/
 
-
 /* These styles have been placed here for as 
  * they have a high chance of needing to be
  * changed if one decides to modify the header
@@ -20,10 +19,11 @@
 	border-bottom: 1px solid transparent;
 }
 /* header button states - text colors */
-.header-btns > div > button:focus {
+.header-btns>div>button:focus {
 	color: #666;
 }
-.header-btns > div > button:hover {
+
+.header-btns>div>button:hover {
 	color: #0094d2;
 }
 
@@ -32,3 +32,6 @@
  * have been generated with the customization 
  * tool below this line. 
 ----------------------------------------------*/
+#sidebar:before{background: #f2f2f2;}
+#sidebar ul.sidebar-nav > li > a{background: #f2f2f2;border-color: #ddd;}
+#sidebar ul.sidebar-nav li ul.sub-nav{background: #f8f8f8;border-color: #ddd;}

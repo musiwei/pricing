@@ -4,13 +4,14 @@
 <!-- Meta, title, CSS, favicons, etc. -->
 <?= $this->partial('partials/meta.phtml', array(
     'ContentType' => 'text/html; charset=iso-8859-1',
-    'keywords' => 'HTML5 Bootstrap 3 Admin Template UI Theme',
-    'description' => 'Stardom - A Responsive HTML5 Admin UI Template Theme',
+    'keywords' => 'Pricing Management System',
+    'description' => 'Easily manage your fomulars for pricing purposes',
     'author' => 'Siwei Mu',
     'viewport' => 'width=device-width, initial-scale=1.0'
         )) ?>
 
 <?= $this->headTitle() ?>
+
 
 <!-- Start: Load core css -->
 <?= $this->render('/resources/css.phtml') ?>
@@ -36,11 +37,13 @@
 
 <body class="<?= $this->placeholder('bodyClass');?>">
 
+
 <!-- Start: Page header -->
 <?php if ($this->placeholder('hasHeader') != '0'):?>
 <?= $this->render('/blocks/header.phtml') ?>
 <?php endif ?>
 <!-- End: Page header -->
+
 
 <div id="main">
 
@@ -50,9 +53,6 @@
 <?php endif ?>
 <!-- End: Page header -->
 
-<!-- Start: Flash messenger -->
-<?= !empty($this->alert) ? '<div class="error">' . implode('<br />', $this->alert) .'</div>' : null ?>
-<!-- End: Flash messenger -->
 
 <!-- Start: Breadcrumb and Content -->
 <?php if ($this->placeholder('hasContent') != '0'):?>
@@ -62,26 +62,16 @@
 
 </div>
 
-<!-- Begin: Front Page Loading Animation --> 
-<div id="page-loader"><span class="glyphicon glyphicon-cog fa-spin cog-1"></span></div>
-<!-- End: Front Page Loading Animation --> 
 
 <!-- Start: Load core javascript -->
 <?= $this->render('/resources/javascript.phtml') ?>
 <!-- End: Load core javascript -->
 
-<script>
-jQuery(document).ready(function() {
-
-	// Init Theme Core 	  
-	Core.init();   
-	
-});
-</script>
 
 <!-- Start: Load custom javascript -->
 <?= $this->javascriptHelper() ?> 
 <!-- End: Load custom javascript -->
+
 
 </body>
 

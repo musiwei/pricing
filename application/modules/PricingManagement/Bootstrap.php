@@ -1,45 +1,53 @@
 <?php
 
 /**
+ * Pricingmanagement Module Bootstrap
+ *
  * @author Siwei Mu (musiwei.work@gmail.com)
  * @copyright Newton's Nerds
  * @since 02 Feb 2014
  * @version 1.0
+ * @package Pricingmanagement Module
  */
 
 class Pricingmanagement_Bootstrap extends Zend_Application_Module_Bootstrap
 {
+    
 
-    
-    
-    protected function _initAutoload ()
-    {
-        
-        /*
-         * If you don't register namespace You will get error : Fatal error:
-         * Class 'Pricingmanagement_Controller_Plugin_Param' not found in
-         * ...\library\Zend\Application\Resource\Frontcontroller.php on line 92
-         */
-        $autoloader = Zend_Loader_Autoloader::getInstance();
-        $autoloader->registerNamespace('Pricingmanagement_');
-        $autoloader->suppressNotFoundWarnings(true);
-    }
-    
-    protected function _initPaths()
+    /**
+     * Save module config into registry
+     *
+     * @author          Siwei Mu
+     * @param           void
+     * @return          void
+     *
+     */
+    protected function _initConfiguration()
     {
     	$registry = Zend_Registry::getInstance();
-    	$registry->path = new Zend_Config( $this->getApplication()->getOption('path') );
+    	$registry->Pricingmanagement = new Zend_Config( $this->getApplication()->getOption('Pricingmanagement') );
     }
     
+    /**
+     * Load site map
+     *
+     * @author          Siwei Mu
+     * @param           void
+     * @return          void
+     *
+     */
     protected function _initNavigation()
     {
-    	$this->bootstrap('layout');
-    	$layout = $this->getResource('layout');
-    	$view = $layout->getView();
+//     	$this->bootstrap('layout');
+//     	$layout = $this->getResource('layout');
+//     	$view = $layout->getView();
     	
-    	$config = new Zend_Config_Xml(Zend_Registry::getInstance()->path->modulePath . 'configs/navigation.xml');
+    	$config = new Zend_Config(require Zend_Registry::getInstance()->config->path->modulePath . 'configs/navigations/navigation.php');// Zend_Config_Xml(Zend_Registry::getInstance()->path->modulePath . 'configs/navigation.xml');
     	
     	$navigation = new Zend_Navigation($config);
+    	
+    	# Navigation can be fetched in all views
+    	$view = Zend_Layout::startMvc()->getView();
     	$view->navigation($navigation);
     }
 }

@@ -1,4 +1,10 @@
-<section id="<?= $this->placeholder('sectionId');?>">
+<?php if ($this->placeholder('sectionId') == ''):?>
+    <?php if ($this->placeholder('hasSidebar') != '0'):?>
+    <section id="content">
+    <?php endif ?>
+<?php else: ?>
+<section id="<?= $this->placeholder('sectionId') ?>">
+<?php endif ?>
 
     <?php if ($this->placeholder('hasBreadcrumb') != '0'):?>
     <!-- Start: Breadcrumb -->
@@ -10,8 +16,14 @@
 	<!-- End: Breadcrumb -->
     <?php endif ?>
 	
+	<!-- Start: Flash messenger -->
+	<?= $this->partial('partials/alert.phtml', array('alert' => $this->alert)) ?>
+    <!-- End: Flash messenger -->
+	
 	<!-- Start: Content -->
+	<div class="container">
     <?= $this->layout()->content?>
+    </div>
     <!-- Start: Content -->
-    
+
 </section>

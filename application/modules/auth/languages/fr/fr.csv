@@ -1,0 +1,16 @@
+hello,bonjour
+User Name,Nom D'utilisateur
+Password,Mot De Passe
+Login,Connexion
+Return <br> to Homepage,Retour <br> à l'accueil
+"Terms of Use","Conditions d'utilisation"
+"Please read our <b>Terms of Use</b> before logging in.","S'il vous plaît lire nos Conditions d'utilisation <b> </ b> avant de vous connecter"
+"Not a member?","Pas encore membre?"
+"Forgotten Password?","Mot de passe oublié?"
+"You have already logged in.","Vous êtes déjà connecté po."
+"You haven't logged in yet.","Vous n'avez pas encore connecté."
+Value is required and can't be empty,Valeur est requise et ne peut pas être vide
+"You have been logged out.","Vous avez été déconnecté."
+"Fail to log out because you haven't logged in yet.","Défaut de vous parce que vous n'avez pas encore connecté."
+"You can log in through the form below.","Vous pouvez vous connecter via le formulaire ci-dessous."
+"Logged in successfully","Connecté avec succès"

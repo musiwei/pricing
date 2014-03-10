@@ -1,0 +1,173 @@
+<h2>Events</h2>
+
+<table class="data">
+	<thead>
+		<tr>
+			<td>Date</td>
+			<td>Event</td>
+		</tr>
+	</thead>
+	<tbody>
+        <?php
+        if (count($this->events) > 0) {
+            foreach ($this->events as $key => $value) {
+                echo '
+                <tr>
+                    <td>' . $value->getHappenedAt()->format('Y-m-d H:i:s') . '</td>
+                    <td>' . $value->getEvent() . '</td>
+                </tr>
+                ';
+            }
+        } else {
+            echo '<tr><td colspan="2">No results</td></tr>';
+        }
+        ?>
+    </tbody>
+</table>
+
+<div class="row">
+	<div class="col-md-5 col-lg-4">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel profile-panel">
+					<div class="panel-heading panel-visible">
+						<div class="panel-title">
+							<i class="fa fa-user"></i> User Profile -
+						</div>
+						<!-- <span class="panel-title-sm pull-left text-success" style="color: #7ec35d; padding-left: 7px; padding-top: 2px;"> Online</span> -->
+						<div class="panel-btns pull-right margin-left">
+							<div class="btn-group">
+								<button type="button"
+									class="btn btn-default btn-gradient dropdown-toggle"
+									data-toggle="dropdown">
+									<span class="glyphicons glyphicons-cogwheel"></span>
+								</button>
+								<ul class="dropdown-menu checkbox-persist pull-right text-left"
+									role="menu">
+									<li><a><i class="fa fa-envelope-o"></i> Message </a></li>
+									<li><a><i class="fa fa-user"></i> Add Friend </a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-xs-5" id="profile-avatar">
+								<img src="/skin/default/theme_stardom/img/avatars/login.png"
+									class="img-responsive" width="150" height="112" alt="avatar">
+							</div>
+							<div class="col-xs-7">
+								<div class="profile-data">
+									<span class="profile-name"> <b class="text-primary"><?= $this->account->getFirstName() ?> <?= $this->account->getLastName() ?></b></span>
+									<div class="profile-email"> <?= $this->account->getEmail() ?> </div>
+									<ul class="profile-info list-unstyled">
+										<li><i class="fa fa-phone"></i> 858-842-3416</li>
+										<li><i class="fa fa-skype"></i> lolholladay</li>
+										<li><i class="fa fa-globe"></i> United States, CA</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="clearfix"></div>
+					</div>
+					<div class="panel-footer">
+						<div class="row">
+							<div class="col-xs-3">
+								<div class="console-btn console-alt console-block">
+									<div class="console-icon">
+										<span class="glyphicons glyphicons glyphicons-hdd"></span>
+									</div>
+									<div class="console-text">
+										<div class="console-title">Tasks</div>
+									</div>
+									<div class="console-badge">
+										<span class="badge btn-teal">3</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-3">
+								<div class="console-btn console-alt console-block">
+									<div class="console-icon">
+										<span class="glyphicons glyphicons-signal"></span>
+									</div>
+									<div class="console-text">
+										<div class="console-title">Calendar</div>
+									</div>
+									<div class="console-badge">
+										<span class="badge btn-green">1</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-3">
+								<div class="console-btn console-alt console-block">
+									<div class="console-icon">
+										<span class="glyphicons glyphicons-user"></span>
+									</div>
+									<div class="console-text">
+										<div class="console-title">Emails</div>
+									</div>
+									<div class="console-badge">
+										<span class="badge btn-red">9</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-3">
+								<div class="console-btn console-alt console-block">
+									<div class="console-icon">
+										<span class="glyphicons glyphicons-settings"></span>
+									</div>
+									<div class="console-text">
+										<div class="console-title">Tools</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-7 col-lg-8">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel">
+					<div class="panel-heading">
+						<div class="panel-title">
+							<i class="fa fa-pencil"></i> Account Event
+						</div>
+					</div>
+					<div class="panel-body margin-top-sm">
+						<div class="padding-none">
+							<div id="datatable_wrapper"
+								class="dataTables_wrapper form-inline" role="grid">
+
+								<table class="table table-striped table-widget table-checklist"
+									id="datatable">
+									<thead>
+										<tr>
+											<th>Status</th>
+											<th>Date</th>
+											<th>Description</th>
+											<th>Assigned To</th>
+											<th>Number</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td><span class="label label-primary">PHP</span></td>
+											<td>10/19/2013</td>
+											<td>Develop <b>Prototype</b> for amazon matrix
+											</td>
+											<td>Ashley Time</td>
+											<td><b>[#4311525]</b></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

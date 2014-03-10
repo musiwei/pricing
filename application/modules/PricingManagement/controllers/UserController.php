@@ -48,36 +48,28 @@ class Pricingmanagement_UserController extends Zend_Controller_Action
         );
         
         $this->view->zendNavigationContainer = new Zend_Navigation($array);
+        $this->getResponse()->setHttpResponseCode(500);
+        $this->_helper->LayoutInit('My Account');
         
-        $this->_helper->LayoutInit('My Account', 
-                array(
-                        'sectionId' => 'content'
-                ));
+        $this->_helper->Message(array('Info'), 'info');
+        $this->_helper->Message(array('Success 1', 'The second success message.'), 'success');
+        $this->_helper->Message(array('Warning'), 'warning');
+        $this->_helper->Message(array('Error 1', 'The second error message.'), 'error');
     }
     
-
-
-    public function loginAction ()
-    {
-        # Title and other options
-        $this->_helper->LayoutInit('Login', 
-                array(
-                        'bodyClass' => 'login-page',
-                        'hasHeader' => '0',
-                        'hasSidebar' => '0',
-                        'hasBreadcrumb' => '0'
-                ));
-        
-        $Users = $this->_helper->DoctrineInit->getRepository('\Application\Entity\User')->findAll();
-        $this->view->users = $Users;
-    }
     
     private function samples(){
+        
+        # To load all users
+        //$Users = $this->_helper->DoctrineInit->getRepository('\Application\Entity\Account')->findAll();
+        //$this->view->users = $Users;
         
     	# To use logger globally
         //Zend_Registry::get('logger')->log('This is a log message!', 3);
         
         # To use flash messenger globally
-        // $this->_helper->FlashMessenger->addMessage('Record Saved!');
+        // $this->_helper->Message(array(...), $namespace);
+        // $this->_helper->Message(array('Error 1', 'Error2'), 'error');
+        
     }
 }

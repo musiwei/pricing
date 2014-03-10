@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Application Bootstrap
+ *
+ * @author Siwei Mu (musiwei.work@gmail.com)
+ * @copyright Newton's Nerds
+ * @since 25 Feb 2014
+ * @version 1.0
+ * @package Application
+ */
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     
@@ -20,6 +29,36 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     }
     
     /**
+     * Store module configurations into registry
+     *
+     * @author          Siwei Mu
+     * @param           void
+     * @return          void
+     *
+     */
+    protected function _initConfigurations()
+    {
+    	$registry = Zend_Registry::getInstance();
+    	$registry->config = new Zend_Config( $this->getOptions() );
+    }
+    
+    /**
+     * Global view helper
+     * To be used in all modules
+     *
+     * @author          Siwei Mu
+     * @param           void
+     * @return          void
+     *
+     */
+    protected function _initViewHelperPaths()
+    {
+    	$this->bootstrap('view');
+    	$view = $this->getResource('view');
+    	$view->addHelperPath(APPLICATION_PATH . '/../library/Application/Global/View/Helper', 'Application_View_Helper_');
+    }
+    
+    /**
      * Doctype of view
      *
      * @author          Siwei Mu
@@ -33,47 +72,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     	$doctypeHelper->doctype('XHTML1_STRICT');
     }
     
-    /**
-     * Initialize translation and locale.
-     *
-     * @author          Siwei Mu
-     * @param           void
-     * @return          void
-     *
-     */
-    protected function _initTranslate ()
-    {
-        $this->bootstrap('frontController');
-        $frontController = $this->getResource('frontController');
-        $router = $frontController->getRouter(); // router is a singleton
-        $request = new Zend_Controller_Request_Http();
-        $router->route($request);
-        
-        $moduleName = $request->getModuleName();
-        
-        // Fetch translate configuration
-        $conf = $this->getOption('resources');
-        
-        $translateAdapter = $conf['translate']['adapter'];
-        // find language folder in each module
-        $translatePath = str_replace("[moduleName]", $moduleName, 
-                $conf['translate']['data']);
-        $translateDelimiter = $conf['translate']['options']['delimiter'];
-        
-        // Automatically install all the language files
-        $translate = new Zend_Translate($translateAdapter, $translatePath, null, 
-                array(
-                        'scan' => Zend_Translate::LOCALE_DIRECTORY,
-                        'delimiter' => $translateDelimiter
-                ));
-        
-        $registry = Zend_Registry::getInstance();
-        $registry->set('Zend_Translate', $translate);
-        
-        // Set default locale
-        $translate->setLocale('en');
-    }
-    
+
     /**
      * Initialize cache.
      *
@@ -84,10 +83,84 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     protected function _initCacheFrontControllerPlugins ()
     {
+        $this->bootstrap('layout');
+        $layout = $this->getResource('layout');
+        $view = $layout->getView();
+    	// Register plugin to handle cache
+    	$frontController = Zend_Controller_Front::getInstance();
+    	$frontController->registerPlugin(new Application_Global_Plugin_CacheInit());
+    }
+    
+    /**
+     * Initialize translation cache.
+     *
+     * @author          Siwei Mu
+     * @param           void
+     * @return          void
+     *
+     */
+    protected function _initTranslateCache (){
+        // Use cache to speed up translation
+        Zend_Translate::setCache(Zend_Registry::get('cache'));
+    }
+    
+    /**
+     * Initialize translation and locale.
+     *
+     * @author          Siwei Mu
+     * @param           void
+     * @return          void
+     *
+     */
+    protected function _initTranslate1 ()
+    {
+//         $this->bootstrap('frontController');
+//         $frontController = $this->getResource('frontController');
+//         $router = $frontController->getRouter(); // router is a singleton
+//         $request = new Zend_Controller_Request_Http();
+//         $router->route($request);
         
-        // Register plugin to handle cache
-        $frontController = Zend_Controller_Front::getInstance();
-        $frontController->registerPlugin(new Application_Plugin_CacheInit());
+//         $moduleName = $request->getModuleName();
+        
+//         // Fetch translate configuration
+//         $conf = $this->getOption('resources');
+        
+//         $translateAdapter = $conf['translate']['adapter'];
+        
+//         $translatePath = $conf['translate']['data'];
+//         $translateDelimiter = $conf['translate']['options']['delimiter'];
+        
+//         // Use cache to speed up translation
+//         Zend_Translate::setCache(Zend_Registry::get('cache'));
+        
+//         // Automatically install all the language files
+//         $translate = new Zend_Translate($translateAdapter, $translatePath, null, 
+//                 array(
+//                         'scan' => Zend_Translate::LOCALE_DIRECTORY,
+//                         'delimiter' => $translateDelimiter
+//                 ));
+        
+//         $registry = Zend_Registry::getInstance();
+//         $registry->set('Zend_Translate', $translate);
+        
+//         // Set default locale
+//         $translate->setLocale('en');
+    }
+    
+    /**
+     * Initialize flash messenger.
+     *
+     * @author          Siwei Mu
+     * @param           void
+     * @return          void
+     *
+     */
+    protected function _initFlashMessengerFrontControllerPlugins ()
+    {
+    
+    	// Register plugin to handle cache
+    	$frontController = Zend_Controller_Front::getInstance();
+    	$frontController->registerPlugin(new Application_Global_Plugin_Alert());
     }
     
     /**
@@ -123,11 +196,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         
         // Add both language route chained with default route and
         // plain language route
-        $router->addRoute('routeWithLanguage', $routeLangDefault);
+        $router->addRoute('default', $routeLangDefault);
         $router->addRoute('lang', $routeLang);
         
         // Register plugin to handle language changes
-        $front->registerPlugin(new Application_Plugin_LanguageSet());
+        $front->registerPlugin(new Application_Global_Plugin_LanguageSet());
     }
     
     /**

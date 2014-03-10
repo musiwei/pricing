@@ -1,10 +1,13 @@
 <?php
 
 /**
+ * Default Error Controller
+ * 
  * @author Siwei Mu (musiwei.work@gmail.com)
  * @copyright Newton's Nerds
  * @since 02 Feb 2014
  * @version 1.0
+ * @package Pricingmanagement Module
  */
 
 class Pricingmanagement_ErrorController extends Zend_Controller_Action
@@ -35,28 +38,22 @@ class Pricingmanagement_ErrorController extends Zend_Controller_Action
                 $priority = Zend_Log::NOTICE;
                 $this->view->responseCode = $this->getResponse()->getHttpResponseCode();
                 $this->view->message = 'Page not found';
-                $this->_helper->LayoutInit('Woops! Page not found',
-                		array(
-                				'bodyClass'     => 'minimal error-page',
-                				'hasHeader'     => '0',
-                				'hasSidebar'    => '0',
-                		        'hasBreadcrumb' => '0'
-                		));
                 break;
             default:
                 // application error
                 $this->getResponse()->setHttpResponseCode(500);
                 $priority = Zend_Log::CRIT;
                 $this->view->message = 'Application error';
-                $this->_helper->LayoutInit('Woops! Application error',
-                		array(
-                				'bodyClass'     => 'minimal error-page',
-                				'hasHeader'     => '0',
-                				'hasSidebar'    => '0',
-                		        'hasBreadcrumb' => '0'
-                		));
                 break;
         }
+        
+        $this->_helper->LayoutInit('Woops! '. $this->view->message,
+        		array(
+        				'bodyClass'     => 'minimal error-page',
+        				'hasHeader'     => '0',
+        				'hasSidebar'    => '0',
+        				'hasBreadcrumb' => '0'
+        		));
         
         // Log exception, if logger available
         if ($log = $this->getRequest()->_logger) {
