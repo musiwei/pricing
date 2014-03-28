@@ -10,7 +10,7 @@
  * @package Application
  */
 
-class Application_View_Helper_T extends Zend_View_Helper_Abstract 
+class Application_Global_View_Helper_T extends Zend_View_Helper_Abstract 
 { 
     /**
      * Translate string

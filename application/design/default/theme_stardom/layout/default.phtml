@@ -1,0 +1,79 @@
+<?= $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<!-- Meta, title, CSS, favicons, etc. -->
+<?= $this->partial('partials/meta.phtml', array(
+    'ContentType' => 'text/html; charset=UTF-8',
+    'keywords' => 'Pricing Management System',
+    'description' => 'Easily manage your fomulars for pricing purposes',
+    'author' => 'Siwei Mu',
+    'viewport' => 'width=device-width, initial-scale=1.0'
+        )) ?>
+
+<?= $this->headTitle() ?>
+
+
+<!-- Start: Load core css -->
+<?= $this->render('/resources/css.phtml') ?>
+<!-- End: Load core css -->
+
+
+<!-- Start: Load custom css -->
+<?= $this->cssHelper() ?> 
+<!-- End: Load custom css -->
+
+
+<!-- Start: Load core icon -->
+<?= $this->render('/resources/icon.phtml') ?>
+<!-- End: Load core icon -->
+
+
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+<![endif]-->
+</head>
+
+<body class="<?= $this->placeholder('bodyClass');?>">
+
+
+<!-- Start: Page header -->
+<?php if ($this->placeholder('hasHeader') != '0'):?>
+<?= $this->render('/blocks/header.phtml') ?>
+<?php endif ?>
+<!-- End: Page header -->
+
+
+<div id="main">
+
+<!-- Start: Sidebar -->
+<?php if ($this->placeholder('hasSidebar') != '0'):?>
+<?= $this->render('/blocks/sidebar.phtml') ?>
+<?php endif ?>
+<!-- End: Page header -->
+
+
+<!-- Start: Breadcrumb and Content -->
+<?php if ($this->placeholder('hasContent') != '0'):?>
+<?= $this->render('/blocks/content.phtml') ?>
+<?php endif ?>
+<!-- End: Breadcrumb and Content -->
+
+</div>
+
+
+<!-- Start: Load core javascript -->
+<?= $this->render('/resources/javascript.phtml') ?>
+<!-- End: Load core javascript -->
+
+
+<!-- Start: Load custom javascript -->
+<?= $this->javascriptHelper() ?> 
+<?= $this->placeholder('customJs');?>
+<!-- End: Load custom javascript -->
+
+
+</body>
+
+</html>

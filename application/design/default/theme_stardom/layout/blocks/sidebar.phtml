@@ -1,0 +1,35 @@
+<aside id="sidebar">
+    <div id="sidebar-search">
+      <form role="search">
+        <input type="text" class="search-bar form-control" placeholder="Search">
+        <i class="fa fa-search field-icon-right"></i>
+        <button type="submit" class="btn btn-default hidden"></button>
+      </form>
+      <div class="sidebar-toggle"> <span class="glyphicon glyphicon-resize-horizontal"></span> </div>
+    </div>
+    <div id="sidebar-menu">
+      <ul class="nav sidebar-nav">
+        <li> <a href="<?= $this->url(array('module'=>'Pricingmanagement','controller' => 'dashboard', 'action' => 'index'))?>"><span class="glyphicons glyphicons-dashboard"></span><span class="sidebar-title">Dashboard</span></a> </li>
+        <li> <a class="accordion-toggle" href="#my-account"><span class="glyphicons glyphicons-user"></span><span class="sidebar-title">My Account</span><span class="caret"></span></a>
+          <ul id="#my-account" class="nav sub-nav">
+            <?php if (!Zend_Auth::getInstance()->hasIdentity()): ?>
+               <li><a href="<?= $this->url(array('module'=>'auth','controller' => 'login', 'action' => 'index'))?>"><span
+                  class="fa fa-sign-in"></span> Sign In</a></li>
+                  <li><a href="<?= $this->url(array('module'=>'auth','controller' => 'register', 'action' => 'index'))?>"><span
+                  class="glyphicons glyphicons-user_add"></span> Sign Up </a></li>
+                  <li><a href="<?= $this->url(array('module'=>'auth','controller' => 'password', 'action' => 'reset'))?>"><span
+                  class="glyphicons glyphicons-keys"></span> Reset Password </a></li>
+                  <?php endif;?>
+               <?php if (Zend_Auth::getInstance()->hasIdentity()): ?>
+               <li><a href="<?= $this->url(array('module'=>'auth','controller' => 'account', 'action' => 'event'))?>"><span
+                  class="glyphicons glyphicons-keys"></span> Account Activity </a></li>
+               <li><a href="<?= $this->url(array('module'=>'auth','controller' => 'password', 'action' => 'update'))?>"><span
+                  class="glyphicons glyphicons-keys"></span> Update Password </a></li>
+                  <li><a href="<?= $this->url(array('module'=>'auth','controller' => 'logout', 'action' => 'index'))?>">
+                  <span class="glyphicons glyphicons-power"></span> Sign Out </a></li>
+                  <?php endif;?>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </aside>

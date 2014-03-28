@@ -21,7 +21,7 @@ class IndexControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
     {
     	$this->dispatch('/');
     	# match with route name which was defined in bootstrap
-    	$this->assertRoute('default');
+    	$this->assertRoute('lang');
     }
     
     /**

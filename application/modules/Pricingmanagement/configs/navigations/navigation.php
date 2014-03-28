@@ -3,7 +3,7 @@ return array(
 		array(
 				'label' => 'Dashboard',
 		        'action' => 'index',
-				'controller' => 'index',
+				'controller' => 'dashboard',
 		        'module' => 'Pricingmanagement',
 		),
 		array(

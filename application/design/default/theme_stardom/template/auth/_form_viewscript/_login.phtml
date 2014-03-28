@@ -1,0 +1,46 @@
+
+
+<form class="cmxform" id="loginForm"
+	method="<?php echo $this->element->getMethod() ?>"
+	name="<?php echo $this->element->getName() ?>"
+	action="<?php echo $this->element->getAction() ?>">
+	
+					<div class="panel-body">
+		<div class="login-avatar">
+			<img src="/skin/default/theme_stardom/img/avatars/login.png"
+				width="150" height="112" alt="avatar">
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-user"></i> </span> <input
+					type="text" class="form-control" maxlength="100"
+					autocomplete="on" name="email" id="email"
+					placeholder="<?= $this->T('User Name')?>">
+			</div>
+		</div>
+		<div class="form-group">
+			<div class="input-group">
+				<span class="input-group-addon"><i class="fa fa-key"></i> </span> <input
+					type="password" class="form-control" maxlength="100"
+					autocomplete="off" name="password" id="password"
+					placeholder="<?= $this->T('Password')?>">
+			</div>
+		</div>
+		
+		<?= $this->element->csrf ?>
+		<div class="alert alert-warning login-alert">
+							    <?= $this->T('Please read our <b>Terms of Use</b> before logging in.')?>
+							</div>
+							
+        <?php foreach ($this->element->getMessages() as $error) echo $this->formErrors($error);?>
+       
+	</div>
+	<div class="panel-footer">
+		<span class="panel-title-sm pull-left" style="padding-top: 7px;"><a>
+									<?= $this->T('Forgotten Password?')?></a></span>
+		<div class="form-group margin-bottom-none">
+		<button type="submit" id="submit" class="btn btn-primary btn-gradient pull-right"><?= $this->T('Login')?></button>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</form>

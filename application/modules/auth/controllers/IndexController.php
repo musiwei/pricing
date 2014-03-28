@@ -1,21 +1,24 @@
 <?php
+
 /**
- * Auth Default Controller
- *
- *
- * @author          Eddie Jaoude
- * @package       Auth Module
- *
+ * Index Controller
+ * 
+ * @author Siwei Mu (musiwei.work@gmail.com)
+ * @copyright Newton's Nerds
+ * @since 24 Feb 2014
+ * @version 1.0
+ * @package Auth Module
  */
+
 class Auth_IndexController extends Zend_Controller_Action
 {
 
     /**
      * Initialisation method
      *
-     * @author          Eddie Jaoude
-     * @param           void
-     * @return           void
+     * @author Siwei Mu
+     * @param void
+     * @return void
      *
      */
     public function init()
@@ -26,9 +29,9 @@ class Auth_IndexController extends Zend_Controller_Action
     /**
      * post dispatch method
      *
-     * @author          Eddie Jaoude
-     * @param           void
-     * @return           void
+     * @author Siwei Mu
+     * @param void
+     * @return void
      *
      */
     public function  postDispatch()
@@ -37,11 +40,11 @@ class Auth_IndexController extends Zend_Controller_Action
     }
 
     /**
-     * default method
+     * default method to redirect to main module front page
      *
-     * @author          Eddie Jaoude
-     * @param           void
-     * @return           void
+     * @author Siwei Mu
+     * @param void
+     * @return void
      *
      */
     public function indexAction()
@@ -52,9 +55,9 @@ class Auth_IndexController extends Zend_Controller_Action
     /**
      * access denied method
      *
-     * @author          Eddie Jaoude
-     * @param           void
-     * @return           void
+     * @author Siwei Mu
+     * @param void
+     * @return void
      *
      */
     public function deniedAction()

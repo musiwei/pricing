@@ -11,5 +11,5 @@
  */
 
 error_reporting(E_ALL | E_STRICT);
-require('../../../Stardom_Theme/vendor/plugins/jqueryupload/server/php/UploadHandler.php');
+require('UploadHandler.php');
 $upload_handler = new UploadHandler();

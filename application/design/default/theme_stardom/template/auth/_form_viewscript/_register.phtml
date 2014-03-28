@@ -1,0 +1,64 @@
+
+
+<form class="cmxform" id="signupForm"
+	method="<?php echo $this->element->getMethod() ?>"
+	name="<?php echo $this->element->getName() ?>"
+	action="<?php echo $this->element->getAction() ?>">
+
+	<div class="panel-body">
+
+		<div class="row form-group">
+			<div class="col-xs-6">
+				<input type="text" class="form-control" maxlength="100"
+					autocomplete="on" name="first_name" id="first_name"
+					placeholder="<?= $this->T('First Name')?>" required>
+			</div>
+
+
+			<div class="col-xs-6">
+				<input type="text" class="form-control error" maxlength="100"
+					autocomplete="on" name="last_name" id="last_name"
+					placeholder="<?= $this->T('Last Name')?>" required>
+			</div>
+		</div>
+
+		<div class="form-group">
+				<input type="text" class="form-control" maxlength="100"
+					autocomplete="on" name="email" id="email"
+					placeholder="<?= $this->T('Email')?>" required>
+					<span class="help-block margin-top-sm"><i class="glyphicons glyphicons-up_arrow"></i> <?= $this->T('Front:RegisterUserNameTip')?></span>
+		</div>
+
+		<div class="form-group">
+				<input type="password" class="form-control" maxlength="100"
+					autocomplete="off" name="password" id="password"
+					placeholder="<?= $this->T('Password')?>" required>
+		</div>
+
+		<?= $this->render('/_widgets/passwordStrengthMeter.phtml') ?>
+
+		<div class="form-group">
+				<input type="password" class="form-control" maxlength="100"
+					autocomplete="off" name="confirm_password" id="confirm_password"
+					placeholder="<?= $this->T('Confirm password')?>" required>
+		</div>
+
+		<div class="alert alert-warning login-alert">
+			<input type="hidden" name="terms" value=""> <input type="checkbox"
+				class="checkbox row-checkbox" name="terms" id="terms"
+				value="I agree">
+							    <?= $this->T('I accept <b>Terms of Use</b>.')?>
+							</div>
+							
+        <?php foreach ($this->element->getMessages() as $error) echo $this->formErrors($error);?>
+        
+	</div>
+	<div class="panel-footer">
+
+		<div class="form-group margin-bottom-none">
+			<button type="submit" id="submit"
+				class="btn btn-primary btn-gradient pull-right"><?= $this->T('Sign up')?></button>
+			<div class="clearfix"></div>
+		</div>
+	</div>
+</form>

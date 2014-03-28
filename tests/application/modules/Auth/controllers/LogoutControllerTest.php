@@ -18,7 +18,7 @@ class LogoutControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
      * @return          void
      *
      */
-    public function loginUser ($user = 'msw0629@gmail.com', $password ='123')
+    public function loginUser ($user = 'msw0629@gmail.com', $password ='123456')
     {
     	$this->request->setMethod('POST')->setPost(
     			array(

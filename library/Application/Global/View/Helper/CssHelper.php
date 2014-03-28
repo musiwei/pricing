@@ -12,7 +12,7 @@
  * @package Application
  */
 
-class Application_View_Helper_CssHelper extends Zend_View_Helper_Abstract 
+class Application_Global_View_Helper_CssHelper extends Zend_View_Helper_Abstract 
 { 
     
     /**
@@ -26,7 +26,7 @@ class Application_View_Helper_CssHelper extends Zend_View_Helper_Abstract
     function cssHelper() { 
         
         $request = Zend_Controller_Front::getInstance()->getRequest(); 
-        $file_uri = Zend_Registry::getInstance()->config->path->customskin . $request->getModuleName() . DIRECTORY_SEPARATOR . $request->getControllerName() . DIRECTORY_SEPARATOR. $request->getActionName() . '.css';
+        $file_uri = Zend_Registry::getInstance()->config->path->customskin . $request->getModuleName() . '/' . $request->getControllerName() . '/'. $request->getActionName() . '.css';
         
         if (file_exists($file_uri)) { 
             $this->view->headLink()->appendStylesheet('/' . $file_uri); 

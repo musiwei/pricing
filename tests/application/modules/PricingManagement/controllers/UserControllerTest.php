@@ -1,7 +1,4 @@
 <?php
-require_once '../../../../../application/modules/Pricingmanagement/controllers/UserController.php';
-
-require_once 'Zend/Test/PHPUnit/ControllerTestCase.php';
 
 /**
  * UserController test case.
@@ -46,7 +43,7 @@ class UserControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
 
     public function testCallWithoutActionShouldPullFromIndexAction()
     {
-    	$this->dispatch('/user');
+    	$this->dispatch('/en/user');
     	$this->assertController('user');
     	$this->assertAction('index');
     }

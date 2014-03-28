@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Accountevent
  *
  * @ORM\Table(name="accountevent")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AccounteventRepository")
  */
 class Accountevent
 {
@@ -109,7 +109,6 @@ class Accountevent
     public function setHappenedAt($happenedAt)
     {
         $this->happenedAt = $happenedAt;
-    
         return $this;
     }
 

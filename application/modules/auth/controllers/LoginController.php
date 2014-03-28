@@ -9,6 +9,7 @@
  * @version 1.0
  * @package Auth Module
  */
+
 class Auth_LoginController extends Zend_Controller_Action
 {
 
@@ -34,14 +35,12 @@ class Auth_LoginController extends Zend_Controller_Action
      */
     public function preDispatch ()
     {
-        // if the user is logged in, they can not login again
+        # if the user is logged in, they can not login again
         if (Zend_Auth::getInstance()->hasIdentity()) {
-            // display to user
-            $this->_helper->Message(array(
-                    'You have already logged in.'
-            ), 'info');
+            # display to user
+            $this->_helper->Message(array('authMsg:AlreadyLoggedin'), 'warning');
             
-            // redirect login page
+            # redirect login page
             $this->_helper->redirector('index', 'index', 'auth');
         }
     }
@@ -67,7 +66,7 @@ class Auth_LoginController extends Zend_Controller_Action
      */
     public function indexAction ()
     {
-        # Title and other options
+        # title and other options
         $this->_helper->LayoutInit('Sign In', 
                 array(
                         'bodyClass' => 'login-page',
@@ -76,12 +75,12 @@ class Auth_LoginController extends Zend_Controller_Action
                         'hasBreadcrumb' => '0'
                 ));
         
-        // load form
+        # load form
         $this->loginForm = new Auth_Form_Login();
         
         $save = $this->authenticate();
         
-        // send to view
+        # send to view
         $this->view->loginForm = $save['form'];
         $this->view->alert = array(
                 'error' => $save['alert']
@@ -112,17 +111,15 @@ class Auth_LoginController extends Zend_Controller_Action
                         Zend_Registry::getInstance()->auth->hash, $data);
                 $save = Zend_Auth::getInstance()->authenticate($authenticate);
                 if (Zend_Auth::getInstance()->hasIdentity()) {
-                    $this->_helper->Message(array(
-                            'Logged in successfully'
-                    ), 'success');
-                    // record event
+                    $this->_helper->Message(array('authMsg:LoginSuccess'), 'success');
+                    # record event
                     $this->_helper->EventRecorder->record('Sign in',
                     Zend_Auth::getInstance()->getIdentity()->getId());
-                    // send to dashboard/user page
+                    # send to dashboard/user page
                     $this->_helper->redirector('index', 'index', 'auth');
                 } else {
                     $alert = array(
-                            'Logged in failed'
+                            'authMsg:LoginFail'
                     );
                 }
             }
@@ -141,10 +138,10 @@ class Auth_LoginController extends Zend_Controller_Action
      * @param void
      * @return void
      */
-    public function validateAction ()
-    {
-        $form = new Auth_Form_Login();
-        $form->isValid($this->_getAllParams());
-        $this->_helper->json($form->getMessages());
-    }
+//     public function validateAction ()
+//     {
+//         $form = new Auth_Form_Login();
+//         $form->isValid($this->_getAllParams());
+//         $this->_helper->json($form->getMessages());
+//     }
 }

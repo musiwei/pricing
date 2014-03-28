@@ -1,0 +1,51 @@
+<!-- Start: Error -->
+<?php if(isset($this->alert['error'])): ?>
+<div class="alert-sm alert-danger alert-dismissable animated fadeInDown">
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	<ul class="fa-ul">
+    <?php foreach ($this->alert['error'] as $msg): ?>
+    <?= '<li><i class="fa-li fa fa-times"></i>'.$this->T($msg).'</li>'?>
+    <?php endforeach;?>
+    </ul>
+</div>
+<?php endif; ?>
+<!-- End: Error -->
+
+<!-- Start: Warning -->
+<?php if(isset($this->alert['warning'])): ?>
+<div class="alert-sm alert-warning alert-dismissable animated fadeInDown">
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	<ul class="fa-ul">
+    <?php foreach ($this->alert['warning'] as $msg): ?>
+    <?= '<li><i class="fa-li fa fa-exclamation-triangle"></i>'.$this->T($msg).'</li>'?>
+    <?php endforeach;?>
+    </ul>
+</div>
+<?php endif; ?>
+<!-- End: Warning -->
+
+<!-- Start: Info -->
+<?php if(isset($this->alert['info'])): ?>
+<div class="alert-sm alert-info alert-dismissable animated fadeInDown">
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	<ul class="fa-ul">
+    <?php foreach ($this->alert['info'] as $msg): ?>
+    <?= '<li><i class="fa-li fa fa-info-circle"></i>'.$this->T($msg).'</li>'?>
+    <?php endforeach;?>
+    </ul>
+</div>
+<?php endif; ?>
+<!-- End: Info -->
+
+<!-- Start: Success -->
+<?php if(isset($this->alert['success'])): ?>
+<div class="alert-sm alert-success alert-dismissable animated fadeInDown">
+<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+	<ul class="fa-ul">
+    <?php foreach ($this->alert['success'] as $msg): ?>
+    <?= '<li><i class="fa-li fa fa-check"></i>'.$this->T($msg).'</li>'?>
+    <?php endforeach;?>
+    </ul>
+</div>
+<?php endif; ?>
+<!-- End: Success -->

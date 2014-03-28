@@ -12,7 +12,7 @@
  * @package Application
  */
 
-class Application_View_Helper_JavascriptHelper extends Zend_View_Helper_Abstract
+class Application_Global_View_Helper_JavascriptHelper extends Zend_View_Helper_Abstract
 {   
     
     /**
@@ -26,7 +26,7 @@ class Application_View_Helper_JavascriptHelper extends Zend_View_Helper_Abstract
     function javascriptHelper() {
         
         $request = Zend_Controller_Front::getInstance()->getRequest();
-        $file_uri = Zend_Registry::getInstance()->config->path->customskin . $request->getModuleName() . DIRECTORY_SEPARATOR . $request->getControllerName() . DIRECTORY_SEPARATOR . $request->getActionName() . '.js';
+        $file_uri = Zend_Registry::getInstance()->config->path->customskin . $request->getModuleName() . '/' . $request->getControllerName() . '/' . $request->getActionName() . '.js';
         
         if (file_exists($file_uri)) {
             $this->view->headScript()->appendFile('/' . $file_uri);

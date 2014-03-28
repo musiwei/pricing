@@ -52,18 +52,29 @@ var Core = function () {
 		// Primary function which controls sidemenu collapse functionality
 		$('#sidebar-menu .sidebar-nav a.accordion-toggle').click(function(e) {
 		    e.preventDefault();
+
+			
 			
 			// If the sidebar is collapsed or in mobile mode(same thing) disable the ability to
 			// collapse menu items as the entire menu has been converted for on hover use
 			if ($('body').hasClass('mobile-viewport') || $('body').hasClass('sidebar-collapsed') ) {
 				if ($('body').hasClass('sidebar-persist')) {}
+				else if ($(this).parents('ul.sub-nav').hasClass('sub-nav')) { }
 				else {return}					
 			};
 			
-			// Collapse all open menus, remove open-menu class and any animation attributes
-			$('a.accordion-toggle.menu-open').next('.sub-nav').slideUp('fast', 'swing', function() {
-				$(this).attr('style','').prev().removeClass('menu-open');
-			});
+			// Check to see if target menu is a third level nav menu. If so don't collapse parent menus
+			if ($(this).parents('ul.sub-nav').hasClass('sub-nav')) {
+				$(this).next('.sub-nav').slideUp('fast', 'swing', function() {
+					$(this).attr('style','').prev().removeClass('menu-open');
+				});
+			}
+			// If not a third level nav menu collapse all open menus, remove open-menu class and any animation attributes
+			else {
+				$('a.accordion-toggle.menu-open').next('.sub-nav').slideUp('fast', 'swing', function() {
+					$(this).attr('style','').prev().removeClass('menu-open');
+				});
+			}
 			
 			// Expand targeted menu item, add open-menu class and remove 
 			// left over animation attributes
@@ -252,17 +263,7 @@ var Core = function () {
 	
   // Init Eager JS DEMO Loading
     var runDemoJS = function () {
-		
-		
-		// Example animations ran on Header Buttons - For Demo Purposes
-		$('.header-btns > div').on('show.bs.dropdown', function() {
-			$(this).children('.dropdown-menu').addClass('animated animated-short flipInY');
-		});
-		$('.header-btns > div').on('hide.bs.dropdown', function() {
-			$(this).children('.dropdown-menu').removeClass('animated flipInY');
-		});
-   
-	
+
 		// Set a boxed-layout state via local storage
 		var boxtest = localStorage.getItem('boxed');
 		
@@ -363,8 +364,9 @@ var Core = function () {
             runChecklists();
             runButtonStates();
             runHeader();
-            runPreviewPane();
-			runDemoJS();
+		 // Just for Demo so Disabled	
+         // runPreviewPane();
+		 //	runDemoJS();
         }
 	}
 	

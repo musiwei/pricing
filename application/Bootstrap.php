@@ -27,6 +27,37 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     	$symfonyAutoloader = new \Doctrine\Common\ClassLoader('Symfony', 'Doctrine');
     	$autoloader->pushAutoloader(array($symfonyAutoloader, 'loadClass'), 'Symfony');
     }
+
+    
+    /**
+     * Save application config into registry
+     *
+     * @author          Siwei Mu
+     * @param           void
+     * @return          void
+     *
+     */
+    protected function _initConfiguration()
+    {
+    	$registry = Zend_Registry::getInstance();
+    	$registry->application = new Zend_Config( $this->getOptions());
+    }
+    
+    /**
+     * Global view helper
+     * To be used in all modules
+     *
+     * @author          Siwei Mu
+     * @param           void
+     * @return          void
+     *
+     */
+    protected function _initViewHelperPaths()
+    {
+    	$this->bootstrap('view');
+    	$view = $this->getResource('view');
+    	$view->addHelperPath(APPLICATION_PATH . '/../library/Application/Global/View/Helper', 'Application_Global_View_Helper_');
+    }
     
     /**
      * Store module configurations into registry
@@ -43,22 +74,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     }
     
     /**
-     * Global view helper
-     * To be used in all modules
-     *
-     * @author          Siwei Mu
-     * @param           void
-     * @return          void
-     *
-     */
-    protected function _initViewHelperPaths()
-    {
-    	$this->bootstrap('view');
-    	$view = $this->getResource('view');
-    	$view->addHelperPath(APPLICATION_PATH . '/../library/Application/Global/View/Helper', 'Application_View_Helper_');
-    }
-    
-    /**
      * Doctype of view
      *
      * @author          Siwei Mu
@@ -72,6 +87,19 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     	$doctypeHelper->doctype('XHTML1_STRICT');
     }
     
+    /**
+     * Provide a Magento-like view and layout rendering approach
+     *
+     * @author          Siwei Mu
+     * @param           void
+     * @return          void
+     *
+     */
+    protected function _initDesignPath ()
+    {
+    	$frontController = Zend_Controller_Front::getInstance();
+    	$frontController->registerPlugin(new Application_Global_Controller_Plugin_SetDesignPath());
+    }
 
     /**
      * Initialize cache.
@@ -83,12 +111,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     protected function _initCacheFrontControllerPlugins ()
     {
-        $this->bootstrap('layout');
-        $layout = $this->getResource('layout');
-        $view = $layout->getView();
-    	// Register plugin to handle cache
+    	# register plugin to handle cache
     	$frontController = Zend_Controller_Front::getInstance();
-    	$frontController->registerPlugin(new Application_Global_Plugin_CacheInit());
+    	$frontController->registerPlugin(new Application_Global_Controller_Plugin_CacheInit());
     }
     
     /**
@@ -100,7 +125,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      *
      */
     protected function _initTranslateCache (){
-        // Use cache to speed up translation
+        # use cache to speed up translation
         Zend_Translate::setCache(Zend_Registry::get('cache'));
     }
     
@@ -158,9 +183,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initFlashMessengerFrontControllerPlugins ()
     {
     
-    	// Register plugin to handle cache
+    	# register plugin to handle cache
     	$frontController = Zend_Controller_Front::getInstance();
-    	$frontController->registerPlugin(new Application_Global_Plugin_Alert());
+    	$frontController->registerPlugin(new Application_Global_Controller_Plugin_Alert());
     }
     
     /**
@@ -174,12 +199,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initRoutes ()
     {
         
-        // Now get router from front controller
+        # get router from front controller
         $this->bootstrap('frontController');
         $front = $this->getResource('frontController');
         $router = $front->getRouter();
         
-        // Create route with language id (lang)
+        # create route with language id (lang)
         $routeLang = new Zend_Controller_Router_Route(':lang', 
                 array(
                         'lang' => 'en'
@@ -187,20 +212,62 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                         'lang' => '[a-z]{2}'
                 ));
         
-        // Instantiate default module route
+        # instantiate default module route
         $routeDefault = new Zend_Controller_Router_Route_Module(array(), 
                 $front->getDispatcher(), $front->getRequest());
         
-        // Chain it with language route
+        # chain it with language route
         $routeLangDefault = $routeLang->chain($routeDefault);
         
-        // Add both language route chained with default route and
-        // plain language route
+        # add both language route chained with default route and plain language route
         $router->addRoute('default', $routeLangDefault);
         $router->addRoute('lang', $routeLang);
         
-        // Register plugin to handle language changes
-        $front->registerPlugin(new Application_Global_Plugin_LanguageSet());
+        # register plugin to handle language changes
+        $front->registerPlugin(new Application_Global_Controller_Plugin_LanguageSet());
+    }
+    
+    /**
+     * ZFDebug.
+     * 
+     * GitHub project https://github.com/jokkedk/ZFDebug
+     *
+     * @author          Siwei Mu
+     * @param           void
+     * @return          void
+     *
+     */
+    protected function _initZFDebug()
+    {
+    	if ('development' == APPLICATION_ENV) {
+    		$autoloader = Zend_Loader_Autoloader::getInstance();
+    		$autoloader->registerNamespace('ZFDebug');
+    		
+    		$em = $this->bootstrap('doctrine')->getResource('doctrine')->getEntityManager();
+    		$em->getConnection()->getConfiguration()->setSQLLogger(new \Doctrine\DBAL\Logging\DebugStack());
+    		
+    		$options = array(
+    				'plugins' => array('Variables',
+    						//'Database' => array('adapter' => $dbAdapter),
+    						'File' => array('basePath' => APPLICATION_PATH .
+    						'..'),
+    						'Cache' => array('backend' => Zend_Registry::get('cache')->getBackend()),
+    						'Exception',
+    				        'Html',
+    				        'Memory',
+    				        'Time',
+    				        'Registry',
+    				        'Application_Global_Controller_Plugin_Debug_Plugin_Doctrine2'  => array(
+    				        		'entityManagers' => array($em),
+    				        ),
+    				)
+    		);
+    		$debug = new Application_Global_Controller_Plugin_Debug($options);
+    
+    		$this->bootstrap('frontController');
+    		$frontController = $this->getResource('frontController');
+    		$frontController->registerPlugin($debug);
+    	}
     }
     
     /**
@@ -230,11 +297,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     protected function _initLogger ()
     {
-        // log file
+        # log file
         $logs = new Zend_Config($this->getApplication()->getOption('logs'));
         $error_log = $logs->tmpDir . DIRECTORY_SEPARATOR . $logs->error;
         
-        // create log file if does not exist
+        # create log file if does not exist
         if (! file_exists($error_log)) {
             $date = new Zend_Date();
             file_put_contents($error_log, 
@@ -242,14 +309,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                              $date->toString('YYYY-MM-dd HH:mm:ss') . "\n\n");
         }
         
-        // check log file is writable
+        # check log file is writable
         if (! is_writable($error_log)) {
             throw new Exception(
                     'Error: log file is not writable ( ' . $error_log .
                              '), check folder/file permissions');
         }
         
-        // create logger object
+        # create logger object
         if ('development' == APPLICATION_ENV) {
             $writer = new Zend_Log_Writer_Firebug();
         } else {

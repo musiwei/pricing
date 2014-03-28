@@ -18,7 +18,7 @@ class LoginControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
      * @return          void
      *
      */
-    public function loginUser ($user = 'msw0629@gmail.com', $password ='123')
+    public function loginUser ($user = 'msw0629@gmail.com', $password ='123456')
     {
         $this->request->setMethod('POST')->setPost(
                 array(
@@ -96,6 +96,29 @@ class LoginControllerTest extends Zend_Test_PHPUnit_ControllerTestCase
     public function testValidLoginShouldRedirectToHomePage()
     {
     	$this->loginUser();
+    }
+    
+    /**
+     * Test case: login form is protected by form hash from csrf attacks
+     *
+     * @author          Siwei Mu
+     * @param           void
+     * @return          void
+     *
+     */
+    public function testLoginFormProtectdFromCsrf()
+    {
+    	$form = new Auth_Form_Login();
+    
+    	$csrf = $form->getElement('csrf');
+    	$csrf->initCsrfToken();
+    	$csrf->initCsrfValidator();
+    
+    	$this->assertTrue($form->isValid(array(
+    	        'email' => 'msw0629@gmail.com',
+    	        'password' => '123456',
+    			'csrf' => $csrf->getHash()
+    	)));
     }
 }
 

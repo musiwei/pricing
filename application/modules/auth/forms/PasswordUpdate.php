@@ -23,7 +23,8 @@ class Auth_Form_PasswordUpdate extends Zend_Form
                     'module' => 'auth',
                     'controller' => 'password',
                     'action' => 'update')))
-            ->setAttrib('class', 'box');
+            ->setAttrib('class', 'box')
+            ->setName('updatePassword');;
 
         # Current password
         $currentPassword = new Zend_Form_Element_Password('currentPassword');
@@ -39,7 +40,12 @@ class Auth_Form_PasswordUpdate extends Zend_Form
             ->setRequired(TRUE)
             ->addFilter('StripTags')
             ->addFilter('StringTrim')
-            ->addValidator('NotEmpty');
+            ->addValidator('NotEmpty')
+            ->addValidator('NotIdentical', FALSE, array('token' => 'currentPassword'))
+            ->addValidator('StringLength', false, 
+                array(
+                        'min' => Zend_Registry::getInstance()->auth->password->minlength,
+                        'max' => Zend_Registry::getInstance()->auth->password->maxlength));
 
         # Confirm new password
         $confirmPassword = new Zend_Form_Element_Password('confirmPassword');
@@ -47,12 +53,19 @@ class Auth_Form_PasswordUpdate extends Zend_Form
             ->setRequired(TRUE)
             ->addFilter('StripTags')
             ->addFilter('StringTrim')
-            ->addValidator('NotEmpty');
+            ->addValidator('NotEmpty')
+            ->addValidator('StringLength', false, array('min'=>6, 'max'=>100))
+            ->addValidator('Identical', false, array('token' => 'newPassword'));
 
         # Submit
-        $submit = new Zend_Form_Element_Submit('sendPassword', 'Update Password');
+        $submit = new Zend_Form_Element_Submit('update');
 
         # Create
         $this->addElements(array($currentPassword, $newPassword, $confirmPassword, $submit));
+        
+        # Set decorator
+        $this->setDecorators(array(
+        array('viewScript', array('viewScript' => '/_form_viewscript/_passwordUpdate.phtml'))
+        ));
     }
 }

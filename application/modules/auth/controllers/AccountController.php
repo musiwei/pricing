@@ -9,6 +9,7 @@
  * @version 1.0
  * @package Auth Module
  */
+
 class Auth_AccountController extends Zend_Controller_Action
 {
 
@@ -23,6 +24,7 @@ class Auth_AccountController extends Zend_Controller_Action
     public function init()
     {
         parent::init();
+        
     }
 
     /**
@@ -33,8 +35,10 @@ class Auth_AccountController extends Zend_Controller_Action
      */
     public function preDispatch()
     {
+        
         # if the user is not logged in, they can not access secure pages
         if (!Zend_Auth::getInstance()->hasIdentity()) {
+            
             # redirect login page
             $this->_helper->redirector('denied', 'index', 'auth');
         }
@@ -50,6 +54,7 @@ class Auth_AccountController extends Zend_Controller_Action
      */
     public function  postDispatch()
     {
+        
         parent::postDispatch();
     }
 
@@ -76,18 +81,22 @@ class Auth_AccountController extends Zend_Controller_Action
      */
     public function eventAction()
     {
-        
 
+        $this->_helper->LayoutInit('Event activity');
+        
         $account = $this->_helper->DoctrineInit->getRepository('\Application\Entity\Account')->findOneBy(array('id' => Zend_Auth::getInstance()->getIdentity()->getId()));
         $events = $this->_helper->DoctrineInit->getRepository('\Application\Entity\Accountevent')->findBy(array('accountId' => Zend_Auth::getInstance()->getIdentity()->getId()));
-        
+        echo Zend_Registry::getInstance()->application->path->design->default;
         # send to view
         $this->view->events = $events;
         $this->view->account = $account;
+        
+        
+        //$response->setBody(preg_replace('/(<\/head>)/i', $this->_helper->DoctrineInit->getRepository('\Application\Entity\Accountevent')->javascriptOutput().'$1', $response->getBody()));
     }
 
     /**
-     * Fetch event to popolate into datatable method
+     * Fetch events to popolate into datatable
      *
      * @author Siwei Mu
      * @param void
@@ -96,42 +105,26 @@ class Auth_AccountController extends Zend_Controller_Action
      */
     public function fetcheventAction ()
     {
-        # get account events
-        $events = $this->_helper->DoctrineInit->getRepository('\Application\Entity\Accountevent')->findBy(array('accountId' => Zend_Auth::getInstance()->getIdentity()->getId()));
-    	
-        $aColumns = array( 'event', 'happened_at' );
         
-        if ( isset( $_GET['iSortCol_0'] ) )
-        {
-        	$sOrder = "ORDER BY  ";
-        	for ( $i=0 ; $i<intval( $_GET['iSortingCols'] ) ; $i++ )
-        	{
-        		if ( $_GET[ 'bSortable_'.intval($_GET['iSortCol_'.$i]) ] == "true" )
-        		{
-        			$sOrder .= $aColumns[ intval( $_GET['iSortCol_'.$i] ) ]."
-				 	".mysql_real_escape_string( $_GET['sSortDir_'.$i] ) .", ";
-        		}
-        	}
-        
-        	$sOrder = substr_replace( $sOrder, "", -2 );
-        	if ( $sOrder == "ORDER BY" )
-        	{
-        		$sOrder = "";
-        	}
-        }
-        
-        # array that datatable accepts
-        $output = array(
-        		"sEcho" => intval($_GET['sEcho']),
-        		"iTotalRecords" => $iTotal,
-        		"iTotalDisplayRecords" => $iFilteredTotal,
-        		"aaData" => array()
+        # return processed account events in json format
+        $this->_helper->json(
+            $this->_helper->DoctrineInit->getRepository('\Application\Entity\Accountevent')->fetchAccountEvents($_GET)
         );
-        
-        $form = new Auth_Form_Login();
-    	$form->isValid($this->_getAllParams());
-    	$this->_helper->json($form->getMessages());
     }
 
-
+    /**
+     * Update data modified by X-Editable plugin
+     *
+     * @author Siwei Mu
+     * @param void
+     * @return void
+     *
+     */
+    public function ajaxupdateAction ()
+    {
+        
+        $this->_helper->json(
+                $this->_helper->DoctrineInit->getRepository('\Application\Entity\Accountevent')->updateAccountEvents($_POST['pk'], $_POST['name'], $_POST['value'])
+        );
+    }
 }

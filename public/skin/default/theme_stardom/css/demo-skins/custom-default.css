@@ -5,8 +5,7 @@
  * and is for demonstrative purposes only.
 -----------------------------------------------*/
 .header-btns > div > button:focus {
-	color: #666;
-}
+  color: #666; }
 
 /* Place custom styles below this line 
 ---------------------------------------*/

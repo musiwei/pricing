@@ -26,6 +26,5 @@ class Auth_Bootstrap extends Zend_Application_Module_Bootstrap
     	$registry = Zend_Registry::getInstance();
     	$registry->auth = new Zend_Config( $this->getApplication()->getOption('auth') );
     }
-
 }
 

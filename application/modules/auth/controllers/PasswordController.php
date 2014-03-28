@@ -9,6 +9,7 @@
  * @version 1.0
  * @package Auth Module
  */
+
 class Auth_PasswordController extends Zend_Controller_Action
 {
 
@@ -55,16 +56,19 @@ class Auth_PasswordController extends Zend_Controller_Action
     {
         # if the user is logged in, they can not reset the password
         if (Zend_Auth::getInstance()->hasIdentity()) {
+            # display to user
+            $this->_helper->Message(array('authMsg:RedirectToUpdatePassword'), 'info');
+            
             # redirect password update page
             $this->_helper->redirector('update', 'password', 'auth');
         }
 
-        # Get form
+        # get form
         $this->passwordForm = new Auth_Form_PasswordReset();
 
         $send = $this->sendPassword();
 
-        #send to view
+        # send to view
         $this->view->passwordForm = $send;
     }
 
@@ -79,22 +83,25 @@ class Auth_PasswordController extends Zend_Controller_Action
     {
         # if the user is NOT logged in, they can not update the password
         if (!Zend_Auth::getInstance()->hasIdentity()) {
+            # display to user
+            $this->_helper->Message(array('authMsg:LoginToUpdatePassword'), 'info');
+            
             # redirect password update page
             $this->_helper->redirector('index', 'login', 'auth');
         }
 
-        #Get form
+        # get form
         $this->updateForm = new Auth_Form_PasswordUpdate();
 
         $send = $this->updatePassword();
 
-        #Send to view
+        # send to view
         $this->view->updateForm = $send;
     }
 
     public function sendPassword()
     {
-        #get form
+        # get form
         $form = $this->passwordForm;
 
         if ($this->_request->isPost()) {
@@ -107,7 +114,7 @@ class Auth_PasswordController extends Zend_Controller_Action
                 $user = $this->getRequest()->_em->getRepository('Auth_Model_Account')->findOneBy(array('email' => (string)$data['email']));
 
                 if (count($user) === 1) {
-                    $password = $this->getRequest()->_em->getRepository('Auth_Model_Account')->generatePassword($this->getRequest()->_registry->config->auth->password->length);
+                    $password = $this->getRequest()->_em->getRepository('Auth_Model_Account')->generatePassword($this->getRequest()->_registry->config->auth->password->minlength);
 
                     $user->setPassword($password, $this->getRequest()->_registry->config->auth->hash);
                     $this->getRequest()->_em->flush();
@@ -122,13 +129,13 @@ class Auth_PasswordController extends Zend_Controller_Action
                     $emailReset->setFrom($this->getRequest()->_registry->config->application->system->email->address,
                                             $this->getRequest()->_registry->config->application->system->email->name);
                     if ($emailReset->send()) {
-                        # Record event
+                        # record event
                         $this->_helper->event->record('reset password', $user->getId());
                         $this->getRequest()->_flashMessenger->addMessage('A new password has been sent to ' . $user->getEmail());
                         $this->_helper->redirector('index', 'index', 'default');
                     }
                 } else {
-                    # Record event
+                    # record event
                     // $this->_helper->event->record('reset password failed'); // removed because no account to log against
                     $this->getRequest()->_flashMessenger->addMessage('Sending failed');
                     $this->_helper->redirector('forgot', 'password', 'auth');
@@ -143,44 +150,42 @@ class Auth_PasswordController extends Zend_Controller_Action
 
     public function updatePassword()
     {
-        #Get Form
+        # get Form
         $form = $this->updateForm;
 
         if ($this->_request->isPost()) {
             # get params
             $data = $this->_request->getPost();
 
-            $form->getElement('newPassword')
-                    ->addValidator('NotIdentical', FALSE, array('token' => $data['currentPassword']))
-                    ->addValidator('stringLength', FALSE, array(Zend_Registry::getInstance()->asset->password->length, 100));
-            $form->getElement('confirmPassword')
-                    ->addValidator('Identical', FALSE, array('token' => $data['newPassword']));
-
             # check validate form
             if ($form->isValid($data)) {
                 # attempt update the password
                 $user = $this->_helper->DoctrineInit->getRepository('\Application\Entity\Account')->findOneBy(array('id' => Zend_Auth::getInstance()->getIdentity()->getId()));
-
                 // @Todo Create one function where we can generate the correct hash
-                if (count($user) === 1 && hash('SHA256', $this->getRequest()->_registry->config->auth->hash . $data['currentPassword']) == $user->getPassword()) { //User exists and posted current password matches the saved password
-                    # Set new password
-                    $user->setPassword($data['newPassword'], $this->getRequest()->_registry->config->auth->hash);
-                    $this->getRequest()->_em->flush();
+                $currentPassword = hash('SHA256', Zend_Registry::getInstance()->auth->hash . $data['currentPassword']);
+                if (count($user) === 1 && $currentPassword == $user->getPassword()) { //User exists and posted current password matches the saved password
+                    # set new password
+                    $user->setPassword($data['newPassword'], Zend_Registry::getInstance()->auth->hash);
+                    $this->_helper->DoctrineInit->getEntityManager()->flush();
+                    
+                    # record event
+                    $this->_helper->EventRecorder->record('Update password', Zend_Auth::getInstance()->getIdentity()->getId());
 
-                    # Record event
-                    $this->_helper->event->record('update password', Zend_Auth::getInstance()->getIdentity()->getId());
-
-                    # Provide feedback
-                    $this->getRequest()->_flashMessenger->addMessage('Your password has been updated'); // move to view
-                    # Redirect to the secure page
-                    $this->_helper->redirector('index', 'account', 'auth');
+                    # provide feedback
+                    $this->_helper->Message(array('authMsg:PasswordUpdated'), 'success');
+                    
+                    # redirect to the secure page
+                    $this->_helper->redirector('update', 'password', 'auth');
                 } else {
+                    # record event
+                    $this->_helper->EventRecorder->record('Update password failed', Zend_Auth::getInstance()->getIdentity()->getId());
 
-                    # Record event
-                    $this->_helper->event->record('update password failed', Zend_Auth::getInstance()->getIdentity()->getId());
-
-                    $this->getRequest()->_flashMessenger->addMessage('Updating password failed'); // move to view
-                    $this->_helper->redirector('index', 'index', 'default');
+                    if($currentPassword != $user->getPassword())
+                    	$this->_helper->Message(array('authMsg:PasswordUpdatePasswordNotMatch'), 'error');
+                    else
+                        $this->_helper->Message(array('authMsg:PasswordUpdateFail'), 'error');
+                    
+                    $this->_helper->redirector('update', 'password', 'auth');
                 }
             } else {
                 # populate form

@@ -1,37 +1,64 @@
 /* Author: Louis Holladay
  * Website: AdminDesigns.com
- * Last Updated: 01/12/14 
- 
+ * Last Updated: 02/01/14 
+ * Copyright 2014 Admin Designs
+=================================================
  * This file is reserved for changes made by 
  * the user. It's often times a good idea to 
  * seperate your changes from the themes core.
  * It makes modifications, and future theme
  * updates much easier to apply.
------------------------------------------------*/
-
+================================================= */
 /* These styles have been placed here for as 
  * they have a high chance of needing to be
  * changed if one decides to modify the header
 -----------------------------------------------*/
-
-/* navbar bottom border disabled by default */
+/* Navbar bottom border disabled by default */
 .navbar {
-	border-bottom: 1px solid transparent;
-}
-/* header button states - text colors */
-.header-btns>div>button:focus {
-	color: #666;
-}
+  border-bottom: 1px solid transparent; }
 
-.header-btns>div>button:hover {
-	color: #0094d2;
-}
+/* Header button states - text colors */
+.header-btns > div > button:focus {
+  color: #666; }
 
-/*---------------------------------------------
- * Place your custom styles or styles which 
+.header-btns > div > button:hover {
+  color: #0094d2; }
+
+/* Sidebar menu item states - background colors */
+/* top level*/
+/* Submenu item level */
+/* Place your custom styles or styles which 
  * have been generated with the customization 
  * tool below this line. 
-----------------------------------------------*/
-#sidebar:before{background: #f2f2f2;}
-#sidebar ul.sidebar-nav > li > a{background: #f2f2f2;border-color: #ddd;}
-#sidebar ul.sidebar-nav li ul.sub-nav{background: #f8f8f8;border-color: #ddd;}
+-----------------------------------------------*/
+ ul.sidebar-nav ul.sub-nav li span.fa{
+ 	margin-right: 12px;
+ }
+ 
+
+ /* Start: Datatable load spinner */
+@-webkit-keyframes spin{
+	0%{-webkit-transform: rotate(0deg);}
+	100%{-webkit-transform: rotate(1800deg);}
+}
+@keyframes spin{
+	0%{transform: rotate(0deg);}
+	100%{transform: rotate(1800deg);}
+}
+.loading{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	box-sizing: border-box;
+	display: block;
+	width: 79px;
+	height: 79px;
+	margin: auto;
+	border-width: 9px;
+	border-style: solid;
+	border-color: transparent #428bca;
+	border-radius: 40px;
+	-webkit-animation: spin 5s ease-in infinite;
+	animation: spin 5s ease-in infinite;
+}
+ /* End: Datatable load spinner */

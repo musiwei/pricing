@@ -9,6 +9,7 @@
  * @version 1.0
  * @package Auth Module
  */
+
 class Auth_LogoutController extends Zend_Controller_Action
 {
 
@@ -38,8 +39,8 @@ class Auth_LogoutController extends Zend_Controller_Action
         # if the user is not logged in, they can not log out
         if (!Zend_Auth::getInstance()->hasIdentity()) {
             # display to user
-            $this->_helper->Message(array("Fail to log out because you haven't logged in yet."), 'error');
-            $this->_helper->Message(array("You can log in through the form below."), 'info');
+            $this->_helper->Message(array("authMsg:FailLogOut"), 'warning');
+            $this->_helper->Message(array("authMsg:LoginThroughForm"), 'info');
             
             # redirect login page
             $this->_helper->redirector('index', 'login', 'auth');
@@ -77,7 +78,7 @@ class Auth_LogoutController extends Zend_Controller_Action
         Zend_Auth::getInstance()->clearIdentity();
 
         # display to user
-        $this->_helper->Message(array('You have been logged out.'), 'success');
+        $this->_helper->Message(array('authMsg:LogoutSuccess'), 'success');
 
         # redirect to login
         $this->_helper->redirector('index', 'login', 'auth');

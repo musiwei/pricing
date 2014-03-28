@@ -1,4 +1,4 @@
-/* All functions in this file are used only for chart.html */
+/* All functions in this file are used only for charts.html */
 var Charts = function () {
 
     // Init Flot Charts Plugin

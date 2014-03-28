@@ -30,7 +30,6 @@ class Auth_Form_Login extends Zend_Form
                     'module' => 'auth',
                     'controller' => 'login',
                     'action' => 'index')))
-            ->setAttrib('class', 'box')
             ->setName('Login');
 
         # Email
@@ -40,8 +39,7 @@ class Auth_Form_Login extends Zend_Form
             ->addFilter('StringTrim')
             ->addFilter('StringToLower')
             ->addValidator('NotEmpty')
-            ->addValidator('EmailAddress')
-            /*->setDecorators()*/;
+            ->addValidator('EmailAddress');
 
         # Password
         $password = new Zend_Form_Element_Password('password');
@@ -51,15 +49,16 @@ class Auth_Form_Login extends Zend_Form
             ->addFilter('StringTrim')
             ->addValidator('NotEmpty');
         
+        # protect form from csrf attack, two layers of security: 1. generate per request, 2. timeout period
         $hash = new Zend_Form_Element_Hash('csrf', array('salt' => 'unique'));
-        $hash->setTimeout(300)
-                ->addErrorMessage('Form timed out. Please reload the page & try again');
+        $hash->setTimeout(600) # unit: second
+             ->addErrorMessage('FormMsg:FormExipred');
 
         # Submit
         $submit = new Zend_Form_Element_Submit('login');
 
         # Create
-        $this->addElements(array($email, $password, $submit));
+        $this->addElements(array($email, $password, $hash, $submit));
         
         # Set decorator
         $this->setDecorators(array(

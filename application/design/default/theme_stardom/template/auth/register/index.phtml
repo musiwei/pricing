@@ -1,0 +1,29 @@
+<a href="../" id="return-arrow"> <i
+	class="fa fa-arrow-circle-left fa-3x text-red2"></i> <span><?= $this->T('Return <br> to Homepage')?>
+	</span>
+</a>
+
+<!-- Start: Main -->
+
+<div class="row">
+	<div id="page-logo">
+		<img src="/skin/default/theme_stardom/img/logos/logo-red.png"
+			class="img-responsive" alt="logo">
+	</div>
+</div>
+
+<div class="row">
+	<div class="panel">
+		<div class="panel-heading">
+		<div class="panel-title"> <span class="glyphicons glyphicons-user"> </span> <?= $this->T('Sign up')?> </div>
+			<span class="panel-title-sm pull-right padding-right-sm"> <a
+				href="<?= $this->url(array('module'=>'auth','controller' => 'login', 'action' => 'index'))?>">
+			<?= $this->T('Already have an account?')?> </a></span>
+		</div>
+				
+				<?php echo $this->registerForm?>
+				
+			</div>
+</div>
+
+<!-- End: Main -->

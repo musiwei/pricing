@@ -9,6 +9,7 @@
  * @version 1.0
  * @package Auth Module
  */
+
 class Auth_RegisterController extends Zend_Controller_Action
 {
 
@@ -36,8 +37,13 @@ class Auth_RegisterController extends Zend_Controller_Action
     {
         # if the user is logged in, they can not register again
         if (Zend_Auth::getInstance()->hasIdentity()) {
+            # display to user
+            $this->_helper->Message(array(
+            		"authMsg:RegisterWhileLoggingin"
+            ), 'warning');
+            
             # redirect login page
-            $this->_helper->redirector('index', 'index', 'default');
+            $this->_helper->redirector('index', 'index', 'auth');
         }
     }
 
@@ -63,6 +69,15 @@ class Auth_RegisterController extends Zend_Controller_Action
      */
     public function indexAction()
     {
+        # title and other options
+        $this->_helper->LayoutInit('Sign In',
+        array(
+        'bodyClass' => 'login-page',
+        'hasHeader' => '0',
+        'hasSidebar' => '0',
+        'hasBreadcrumb' => '0'
+        		));
+        
         # load form
         $form = new Auth_Form_Register;
 
@@ -82,13 +97,9 @@ class Auth_RegisterController extends Zend_Controller_Action
      * @return           void
      *
      */
-    public function successfulAction()
+    public function successAction()
     {
-        # load form
-        $form = new Auth_Form_Login;
-
-        # send to view
-        $this->view->loginForm = $form;
+        $this->_helper->redirector('index', 'login', 'auth');
     }
 
     /**
@@ -120,9 +131,10 @@ class Auth_RegisterController extends Zend_Controller_Action
                     $this->_helper->DoctrineInit->getEntityManager()->flush();
 
                     # send to login page
-                    $this->_helper->redirector('successful', 'register', 'auth');
+                    $this->_helper->Message(array('authMsg:RegistrationSuccess'), 'success');
+                    $this->_helper->redirector('success', 'register', 'auth');
                 } else {
-                    $alert = array('Registration Failed: Email already exists'); // move to view
+                    $alert = array('authMsg:AccountExists'); // move to view
                 }
             }
             # populate form
@@ -132,6 +144,18 @@ class Auth_RegisterController extends Zend_Controller_Action
     }
 
 
-
+    /**
+     * Login form validation method
+     *
+     * @author Siwei Mu
+     * @param void
+     * @return void
+     */
+    public function validateAction ()
+    {
+    	$form = new Auth_Form_Register();
+    	$form->isValid($this->_getAllParams());
+    	$this->_helper->json($form->getMessages());
+    }
 }
 
